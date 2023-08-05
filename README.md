@@ -4,6 +4,7 @@
 
 
 # docker
-
+docker build -t test1 .
+docker run test1
 docker run -p 3000:3000 my-web-server
 http://localhost:3000/
