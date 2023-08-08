@@ -4,7 +4,12 @@
 
 
 # docker
-docker build -t test1 .
-docker run test1
-docker run -p 3000:3000 my-web-server
-http://localhost:3000/
+docker build -t test1 . <br>
+docker run test1 <br>
+docker run -p 3000:3000 my-web-server<br>
+http://localhost:3000/<br>
+
+
+# To DO
+1. CSS 渲染问题 目前用了text-align 只能做到左边对齐，右边无法对其，感觉不是很美观的样子欸
+2. 
