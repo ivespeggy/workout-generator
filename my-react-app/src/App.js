@@ -3,17 +3,26 @@ import './App.css';
 import React, {useState} from 'react';
 import musclesData  from './data/muscles'
 function App() {
-  let [clickState,setClickState] = useState(false)
+  const [clickState,setClickState] = useState([0,0,0,0,0,0,0,0,0,0,0,0,0])
 
   let ClickAction = (clickId) =>{
-    if(!musclesData[clickId].clicked){
-      setClickState(!clickState)
+    let updatedState = [...clickState]
+
+    if(clickState[clickId] === 0){
+      // 还没有被点击过，或者是合上的状态,
+      // change the state here
+      updatedState[clickId] = 1
+      setClickState(updatedState)
+      console.log(clickState)
     }
     else{
-      setClickState(!clickState)
+      //state is 1
+      updatedState[clickId] = 0
+      setClickState(updatedState)
+      console.log(clickState)
     }
 
-    console.log(clickId)
+    // console.log(updatedState)
   }
   return (
     <div className="App">
@@ -25,15 +34,20 @@ function App() {
           const name_cn = musclesData[key].name_cn
           const name_en = musclesData[key].name_en
           const training_moves = musclesData[key].training_moves
-          const clicked = musclesData[key].clicked
+          // const clicked = musclesData[key].clicked
           return(
             <li className='ul' key={id} onClick={()=> ClickAction(id)}>
-              <strong>{name_cn}</strong> {name_en}
+              <strong className='cn_name'>{name_cn}</strong> <strong className='name_en'>{name_en}</strong>
               {
-                clickState && id?<h1>yes</h1>: null
+                clickState[id] === 1 && training_moves.map((move,index) =>{
+                  return(
+                    <ul key={index}>
+                    {move}
+                  </ul>
+                  )
+                })
               }
             </li>
-            
           )
         })}
 
