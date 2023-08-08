@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+.ul{
+  list-style: none;
+  text-align: justify;
+}
+
+
+.create-plan-button{
+  background-color: chartreuse;
+  border-radius: 10cm;
+}
+.li-individual{
+  margin-bottom: 15%;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,7 +27,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #adc8fe;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
