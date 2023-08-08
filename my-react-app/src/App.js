@@ -37,7 +37,7 @@ function App() {
           // const clicked = musclesData[key].clicked
           return(
             <li className='ul' key={id} onClick={()=> ClickAction(id)}>
-              <strong className='cn_name'>{name_cn}</strong> <strong className='name_en'>{name_en}</strong>
+              <strong>{name_cn}</strong> <strong>{name_en}</strong>
               {
                 clickState[id] === 1 && training_moves.map((move,index) =>{
                   return(
