@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 导入 Link 组件
+import { useNavigate,Link, Routes, Route, BrowserRouter } from 'react-router-dom'; // 导入 Link 组件
 import musclesData from '../data/muscles';
 import "./Home.css"
-
+import Plan from './Plan';
 export default function Home() {
   const navigate = useNavigate();
   const [clickState, setClickState] = useState(Array.from({ length: 13 }, () => 0)); // 初始化 clickState
@@ -13,6 +13,11 @@ export default function Home() {
     updatedState[clickId] = updatedState[clickId] === 0 ? 1 : 0;
     setClickState(updatedState);
   };
+  const ButtonOnClick = () =>{
+    console.log("You clicked submit")
+    //Switch to plan 
+    navigate('/Plan')
+  }
 
   return (
     <div>
@@ -38,8 +43,7 @@ export default function Home() {
             );
           })}
         </ul>
-
-        <button className="button primary-button" type="submit" to="/create-plan">点击创建您自己的训练计划吧！！</button>
+          <button className="submit-button" type="submit" onClick={ButtonOnClick}>点击创建您自己的训练计划吧！！</button>
       </header>
     </div>
   );
