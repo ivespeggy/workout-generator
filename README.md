@@ -11,5 +11,5 @@ http://localhost:3000/<br>
 
 
 # To DO
-1. CSS 渲染问题 目前用了text-align 只能做到左边对齐，右边无法对其，感觉不是很美观的样子欸
+1. CSS 渲染问题 目前用了text-align 只能做到左边对齐，右边无法对其，感觉不是很美观的样子欸(加个wrapper也许就好了)
 2. 
