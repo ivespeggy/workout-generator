@@ -12,4 +12,5 @@ http://localhost:3000/<br>
 
 # To DO
 1. CSS 渲染问题 目前用了text-align 只能做到左边对齐，右边无法对其，感觉不是很美观的样子欸
-2. Plan 这page 感觉略显多余，要是能在主页跳出来就好，现在先这样
+2. Plan 这page 感觉略显多余，要是能在主页跳出来就好，现在先这样 (可以在主页跳 就是设计一个general的页面 然后点完submit只re-render特定区域就行)
+3. 
