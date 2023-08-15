@@ -2,16 +2,18 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarComp from './component/NavbarComp'
 import Home from './component/Home';
 import Plan from './component/Plan';
 function App() {
   return (
     <div className="App">
+     
       <Router>
+      <NavbarComp/>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Plan" element={<Plan />} />
+          <Route path="/plan" element={<Plan />} />
 
         </Routes>
       </Router>
