@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate,Link, Routes, Route, BrowserRouter } from 'react-router-dom'; // 导入 Link 组件
+import { useNavigate } from 'react-router-dom'; // 导入 Link 组件
 import musclesData from '../data/muscles';
 import "./Home.css"
-import Plan from './Plan';
+
 export default function Home() {
   const navigate = useNavigate();
   const [clickState, setClickState] = useState(Array.from({ length: 13 }, () => 0)); // 初始化 clickState
+  const [form, setForm]=useState({});
 
   const ClickAction = (clickId) => {
     // 更新 clickState 逻辑
