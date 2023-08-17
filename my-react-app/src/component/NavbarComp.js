@@ -1,16 +1,17 @@
-import React, { Component } from 'react'
-import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
+import React from 'react'
+import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import './NavbarComp.css'
 
 
 export default function NavbarComp() {
   return (
-    <BootstrapNavbar bg="dark" variant="dark" expand="lg">
-      <BootstrapNavbar.Brand as={Link} to="/">
+    <Navbar expand="lg" className='navbar-style'>
+      <Navbar.Brand className="custom-brand" as={Link} to="/">
         My App
-      </BootstrapNavbar.Brand>
-      <BootstrapNavbar.Toggle aria-controls="navbar-nav" />
-      <BootstrapNavbar.Collapse id="navbar-nav">
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="navbar-nav" />
+      <Navbar.Collapse className="justify-content-end custom-collapse" id="navbar-nav">
         <Nav className="ml-auto">
           <Nav.Link as={Link} to="/">
             Home
@@ -19,7 +20,7 @@ export default function NavbarComp() {
             Plan
           </Nav.Link>
         </Nav>
-      </BootstrapNavbar.Collapse>
-    </BootstrapNavbar>
+      </Navbar.Collapse>
+    </Navbar>
   )
 }
