@@ -1,4 +1,7 @@
 .App {
   text-align: center;
   background-color: #adc8fe;
+  background-size: cover;
+  min-height: 100vh;
 }
+

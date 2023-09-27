@@ -13,7 +13,7 @@ export default function NavbarComp() {
       <Navbar.Toggle aria-controls="navbar-nav" />
       <Navbar.Collapse className="justify-content-end custom-collapse" id="navbar-nav">
         <Nav className="ml-auto">
-          <Nav.Link as={Link} to="/">
+          <Nav.Link className="material-symbols-outlined" as={Link} to="/">
             Home
           </Nav.Link>
           <Nav.Link as={Link} to="/muscles">
@@ -21,6 +21,9 @@ export default function NavbarComp() {
           </Nav.Link>
           <Nav.Link as={Link} to="/plan">
             Plan
+          </Nav.Link>
+          <Nav.Link className="material-symbols-outlined" as={Link} to="/login">
+            person
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
