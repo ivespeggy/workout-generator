@@ -22,3 +22,13 @@
     width: 100%;
     margin-bottom: 10px;
 }
+.errorMsg{
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.hide{
+    display: none;
+}
