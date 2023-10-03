@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import "./Login.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [loginState, setLoginState] = useState({
     username: "",
     password: "",
   });
+  const [authorized, setAuthorized] = useState(false);
   const handleChange = (e) => {
     setLoginState({
       ...loginState,
@@ -24,8 +27,7 @@ export default function Login() {
     <div className="wrapper">
       <form className="row g-3" onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <InputGroup className="mb-3">
-          {/* <InputGroup.Text id="basic-addon1">@</InputGroup.Text> */}
+        <InputGroup className="inputgroup mb-3">
           <Form.Control
             name="username"
             placeholder="Username"
@@ -34,7 +36,7 @@ export default function Login() {
             onChange={handleChange}
           />
         </InputGroup>
-        <InputGroup className="mb-3">
+        <InputGroup className="inputgroup mb-3">
           <Form.Control
             name="password"
             placeholder="Password"
@@ -43,9 +45,10 @@ export default function Login() {
             onChange={handleChange}
           />
         </InputGroup>
-        <Button type="submit" variant="primary">
+        <Button className="button" type="submit" variant="primary">
           Submit
         </Button>{" "}
+        <Link to="/register"> Don't have an account? Register now</Link>
       </form>
     </div>
   );
