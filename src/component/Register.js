@@ -1,12 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import "./Register.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthProvider";
+import axios from "../api/axios";
+
+const REGISTER_URL = "/users";
 
 export default function Register() {
+  const userRef = useRef();
+  const errorRef = useRef();
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
   const [registerState, setRegisterState] = useState({
-    username: "",
+    userName: "",
     gender: "",
     weight: "",
     height: "",
@@ -21,9 +29,28 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(registerState);
+    try {
+      //const basicAuthCredentials=btoa(registerState.username+":"+registerState.password);
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify(registerState),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            //Authorization: "Basic" + basicAuthCredentials
+          },
+        }
+      );
+    } catch (error) {
+      if (!error?.response) {
+        setErrorMsg("No Server Response");
+      } else {
+        const responseData = error.response.data;
+        setErrorMsg(responseData.code + " " + responseData.message);
+      }
+    }
   };
   useEffect(() => {}, []);
   return (
@@ -47,7 +74,6 @@ export default function Register() {
             aria-label="Gender"
             aria-describedby="basic-addon2"
             onChange={handleChange}
-            required
           >
             <option selected disabled>
               Select your Identity

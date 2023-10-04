@@ -12,6 +12,7 @@ import Plan from "./component/Plan";
 import Muscles from "./component/Muscles";
 import Login from "./component/Login";
 import Register from "./component/Register";
+import Person from "./component/Person";
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
           <Route path="/plan" element={<Plan />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/person" element={<Person />} />
         </Routes>
       </Router>
     </div>

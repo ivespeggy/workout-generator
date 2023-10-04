@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import React, { useEffect, useContext } from "react";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import "./DefaultNavbar.css";
+import AuthContext from "../context/AuthProvider";
 
 export default function DefaultNavbar() {
+  const { auth, logout } = useContext(AuthContext);
   const location = useLocation();
-  const { authorized } = location.state || {};
+  const menuProps = {};
   let contentToRender;
-  if (authorized) {
+  if (auth) {
     contentToRender = (
       <>
         {" "}
@@ -19,7 +21,7 @@ export default function DefaultNavbar() {
           className="justify-content-end custom-collapse"
           id="navbar-nav"
         >
-          <Nav className="ml-auto">
+          <Nav>
             <Nav.Link className="material-symbols-outlined" as={Link} to="/">
               Home
             </Nav.Link>
@@ -29,18 +31,25 @@ export default function DefaultNavbar() {
             <Nav.Link as={Link} to="/plan">
               Plan
             </Nav.Link>
-            <Nav.Link
-              className="material-symbols-outlined"
-              as={Link}
-              to="/login"
+            <NavDropdown
+              //className="material-symbols-outlined"
+              //className="dropdown"
+              align="end"
+              title="Person"
+              menuProps={menuProps}
             >
-              person
-            </Nav.Link>
+              <NavDropdown.Item as={Link} to="/person">
+                Your Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/" onClick={logout}>
+                Sign Out
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </>
     );
-  } else if (!authorized && location.pathname === "/login") {
+  } else if (location.pathname === "/login") {
     contentToRender = <></>;
   } else {
     contentToRender = (

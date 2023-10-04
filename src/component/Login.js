@@ -8,7 +8,7 @@ import axios from "../api/axios";
 const LOGIN_URL = "/users/login";
 
 export default function Login() {
-  const { setAuth } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function Login() {
 
       const accessToken = response?.data?.data.token;
       const roles = response?.data?.data.userInfo.roles;
-      setAuth({ roles, accessToken });
+      login({ roles, accessToken });
       // console.log(JSON.stringify(roles));
       setLoginState({
         username: "",
