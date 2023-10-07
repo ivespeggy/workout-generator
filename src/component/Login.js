@@ -40,10 +40,10 @@ export default function Login() {
         // 这样就带着cookie了 如果后端CORS设置时.allowedOrigin("*")就会报错
         // withCredentials: true,
       });
-
+      const id = response?.data?.data.userInfo.id;
       const accessToken = response?.data?.data.token;
       const roles = response?.data?.data.userInfo.roles;
-      login({ roles, accessToken });
+      login({ id, roles, accessToken });
       // console.log(JSON.stringify(roles));
       setLoginState({
         username: "",
