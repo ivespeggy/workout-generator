@@ -1,0 +1,18 @@
+[
+    {
+        "image" : "https://images.pexels.com/photos/4058411/pexels-photo-4058411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "title" : "First Slide label",
+        "subtitle" : "Nulla vitae elit libero, a pharetra augue mollis interdum."
+    },
+        {
+        "image" : "https://images.pexels.com/photos/4024914/pexels-photo-4024914.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "title" : "Second slide label",
+        "subtitle" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    }
+    ,    
+    {
+        "image" : "https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg",
+        "title" : "Third slide label",
+        "subtitle" : "Praesent commodo cursus magna, vel scelerisque nisl consectetur."
+    }
+]
