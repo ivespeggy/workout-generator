@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useRef } from "react";
 import "./Register.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
 
 const REGISTER_URL = "/users";
@@ -10,7 +9,6 @@ const REGISTER_URL = "/users";
 export default function Register() {
   const userRef = useRef();
   const errorRef = useRef();
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [registerState, setRegisterState] = useState({
@@ -32,17 +30,16 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //const basicAuthCredentials=btoa(registerState.username+":"+registerState.password);
       const response = await axios.post(
         REGISTER_URL,
         JSON.stringify(registerState),
         {
           headers: {
             "Content-Type": "application/json",
-            //Authorization: "Basic" + basicAuthCredentials
           },
         }
       );
+      navigate("/login");
     } catch (error) {
       if (!error?.response) {
         setErrorMsg("No Server Response");
@@ -52,7 +49,6 @@ export default function Register() {
       }
     }
   };
-  useEffect(() => {}, []);
   return (
     <div className="wrapper">
       <form className="row g-3" onSubmit={handleSubmit}>
@@ -63,6 +59,7 @@ export default function Register() {
             placeholder="Username"
             aria-label="Username"
             aria-describedby="basic-addon1"
+            ref={userRef()}
             onChange={handleChange}
             required
           />
@@ -129,6 +126,7 @@ export default function Register() {
             placeholder="Confirm Password"
             aria-label="Password"
             aria-describedby="basic-addon7"
+            pattern={registerState.password}
             onChange={handleChange}
             required
           />
