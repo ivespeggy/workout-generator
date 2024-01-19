@@ -1,5 +1,6 @@
 import react from 'react'
-
+import SignUp from './SignUp';
+import Login from './Login';
 interface PopupWindowProp{
     isOpen: boolean;
     onClose: ()=> void;
@@ -20,13 +21,13 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
         default:
             displayPurpose = 'Initialization'
             break
-            //should not happen though
+            //theoretically should not happen though
     }
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-4 rounded">
-          <h2 className="text-lg">{displayPurpose}</h2>
+          {purpose === 'signup' ? <SignUp/> : <Login/>}
           <button onClick={onClose} className="border p-2 rounded mt-2">
             Close
           </button>
