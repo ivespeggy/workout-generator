@@ -1,23 +1,15 @@
-'use client';
-
-import React, { useState } from 'react';
+'use client'
+import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import PopupWindow from './PopupWindow';
-import NavbarUsers from './NavBarUsers';
-import NavBarVistors from './NavBarVistors';
-
-const Navbar = () => {
+const NavBarVistors =  () => {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [purpose, setPurpose] = useState<'signup' | 'login' | 'initialization'>('initialization');
-    const [NavbarStates, setNavbarStates] = useState<'users' | 'vistors'>('vistors')
-    
-    return (
-        <>
-            <nav className='flex justify-between w-full items-center text-black'>
-            {NavbarStates === 'vistors' ? <NavBarVistors/> : <NavbarUsers/>}
 
-                {/* <div className='flex items-center'>
+    return(
+        <>
+                <div className='flex items-center'>
                     <button className='pl-2' onClick={() => console.log("Home Button Clicked")}>
                         Home1
                     </button>
@@ -42,11 +34,11 @@ const Navbar = () => {
                             Sign Up
                         </button>
                     </div>
-                </div> */}
-            </nav>
+                </div>
             <PopupWindow isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} purpose={purpose} />
-        </>
-    );
-};
 
-export default Navbar;
+        </>
+    )
+}
+
+export default NavBarVistors 

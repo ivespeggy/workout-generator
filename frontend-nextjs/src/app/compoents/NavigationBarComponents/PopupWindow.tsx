@@ -1,5 +1,5 @@
 import react from 'react'
-import SignUp from './SignUp';
+import SignUp from './Register';
 import Login from './Login';
 interface PopupWindowProp{
     isOpen: boolean;
@@ -28,7 +28,7 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-4 rounded">
           {purpose === 'signup' ? <SignUp/> : <Login/>}
-          <button onClick={onClose} className="border p-2 rounded mt-2">
+          <button onClick={onClose} className="border p-2 rounded mt-2 bg-red-500">
             Close
           </button>
         </div>
