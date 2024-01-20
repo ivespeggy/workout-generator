@@ -10,7 +10,7 @@ import Muscles from "./component/Muscles";
 import Login from "./component/Login";
 import Register from "./component/Register";
 function App() {
-  const[user,setUser]=useState(false);
+  const[user,setUser]=useState(true);
   return (
     <div className="App">
       <Router>
