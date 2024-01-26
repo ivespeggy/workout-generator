@@ -1,4 +1,4 @@
-interface MuscleGroup {
+export interface MuscleGroup {
     id: number
     name_en: string
     name_cn: string
