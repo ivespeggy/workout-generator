@@ -26,15 +26,27 @@ export default function Muscles() {
               const { id, name_cn, name_en, training_moves } = muscle;
 
               return (
-                <li key={id} onClick={() => ClickAction(id)}>
-                  <strong>{name_cn}</strong> <strong>{name_en}</strong>
-                  {clickState[id] === 1 && (
-                    <ul>
-                      {training_moves.map((move, index) => (
-                        <li key={index}>{move}</li>
-                      ))}
-                    </ul>
-                  )}
+                <li key={id}>
+                    <div onClick={()=>{
+                        ClickAction(id)
+                    }}>
+                        <strong>
+                            {name_cn}
+                        </strong>
+                        <strong>
+                            {name_en}
+                        </strong>
+                        
+                    </div>
+                    {
+                        clickState[id] ===1 &&(
+                            <ul>
+                                {training_moves.map((move,index)=>(
+                                    <li key={index}>{move}</li>
+                                ))}
+                            </ul>
+                        )
+                    }
                 </li>
               );
             })}
