@@ -3,11 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import musclesData from "../MuscleData/Muscles";
 import { MuscleGroup } from '../MuscleData/Muscles';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Muscles() {
   const [clickState, setClickState] = useState<Record<number, number>>(
     Object.fromEntries(Object.keys(musclesData).map(key => [parseInt(key), 0]))
   );
+
+  
 
   const ClickAction = (clickId: number) => {
     setClickState(prevState => ({
@@ -17,7 +21,7 @@ export default function Muscles() {
   };
   const JumpAction = (selectedMove: string) =>()=>{
     console.log(selectedMove)
-    
+
   }
 
   return (
@@ -31,28 +35,23 @@ export default function Muscles() {
 
               return (
                 <li key={id}>
-                    <div className='cursor-pointer' onClick={()=>{
-                        ClickAction(id)
-                    }}>
-                        <strong>
-                            {name_cn}
-                        </strong>
-                        <strong>
-                            {name_en}
-                        </strong>
-                        
-                    </div>
-                    {
-                        clickState[id] ===1 &&(
-                            <ul>
-                                {training_moves.map((move,index)=>(
-                                      
-                                      <li className='cursor-pointer' key={index} onClick={JumpAction(move)}>{move}</li>
-
-                                ))}
-                            </ul>
-                        )
-                    }
+                  <div className='cursor-pointer' onClick={() => ClickAction(id)}>
+                    <strong>{name_cn}</strong>
+                    <strong>{name_en}</strong>
+                  </div>
+                  {clickState[id] === 1 && (
+                    <ul>
+                      {training_moves.map((move, index) => (
+                        <li key={index} className='cursor-pointer'>
+                          <Link href={`/muscles/${encodeURIComponent(move)}`}>
+                            <strong>
+                              {move}
+                            </strong>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               );
             })}
@@ -60,5 +59,5 @@ export default function Muscles() {
         </header>
       </div>
     </>
-  );
+  )
 }
