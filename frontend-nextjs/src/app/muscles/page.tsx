@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import musclesData from "../MuscleData/Muscles";
 import { MuscleGroup } from '../MuscleData/Muscles';
 
@@ -15,6 +15,12 @@ export default function Muscles() {
       [clickId]: prevState[clickId] === 0 ? 1 : 0
     }));
   };
+  const JumpAction = (selectedMove: string) =>()=>{
+    const JumpAction = (selectedMove: string) => () => {
+
+    };
+    
+  }
 
   return (
     <>
@@ -42,7 +48,9 @@ export default function Muscles() {
                         clickState[id] ===1 &&(
                             <ul>
                                 {training_moves.map((move,index)=>(
-                                    <li key={index}>{move}</li>
+                                      
+                                      <li key={index} onClick={JumpAction(move)}>{move}</li>
+
                                 ))}
                             </ul>
                         )
