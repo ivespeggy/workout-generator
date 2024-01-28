@@ -16,9 +16,7 @@ export default function Muscles() {
     }));
   };
   const JumpAction = (selectedMove: string) =>()=>{
-    const JumpAction = (selectedMove: string) => () => {
-
-    };
+    console.log(selectedMove)
     
   }
 
@@ -33,7 +31,7 @@ export default function Muscles() {
 
               return (
                 <li key={id}>
-                    <div onClick={()=>{
+                    <div className='cursor-pointer' onClick={()=>{
                         ClickAction(id)
                     }}>
                         <strong>
@@ -49,7 +47,7 @@ export default function Muscles() {
                             <ul>
                                 {training_moves.map((move,index)=>(
                                       
-                                      <li key={index} onClick={JumpAction(move)}>{move}</li>
+                                      <li className='cursor-pointer' key={index} onClick={JumpAction(move)}>{move}</li>
 
                                 ))}
                             </ul>
