@@ -10,7 +10,7 @@ const NavbarUsers = ()=> {
                 <div className='flex items-center'>
                     <Link href={"/"} passHref>
                     <button className='pl-2' onClick={() => console.log("Home Button Clicked")}>
-                        Home1
+                        Home
                     </button>
                     </Link>
                 </div>
