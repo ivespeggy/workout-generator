@@ -166,4 +166,24 @@ const musclesData: Record<number, MuscleGroup> = {
 
   }
 
+  /**
+   * @param name_cn | name_en
+   * @bool => find results
+   */
+
+export class  MuscleGroupUtils{
+  static searchForMuscle(name: string): MuscleGroup[]{
+    const result: MuscleGroup[] = []
+    for (const key in musclesData){
+      if(name.toLowerCase() === musclesData[key].name_en.toLowerCase()){
+        result.push(musclesData[key])
+      }
+    }
+    console.log(result)
+    return result
+  }
+
+}
+
+
 export default musclesData

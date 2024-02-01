@@ -36,8 +36,9 @@ export default function Muscles() {
               return (
                 <li key={id}>
                   <div className='cursor-pointer' onClick={() => ClickAction(id)}>
-                    <strong>{name_cn}</strong>
-                    <strong>{name_en}</strong>
+                    <strong className='mr-2'>{name_cn}</strong>
+                    <strong className='mr-4'>{name_en}</strong>
+                    <button className="rounded-full bg-green-500 px-4 mt-2">Click</button>
                   </div>
                   {clickState[id] === 1 && (
                     <ul>
