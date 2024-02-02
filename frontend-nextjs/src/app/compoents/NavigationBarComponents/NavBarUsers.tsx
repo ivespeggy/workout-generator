@@ -20,7 +20,6 @@ const NavbarUsers = ()=> {
                         <div className='flex flex-col items-center'>
                             <FontAwesomeIcon icon={faListCheck} size="sm" style={{ width: '18px', height: '18px' }} />
                             <button className='pl-2' onClick={() => {
-                                console.log(110)
                             }}>
                                 Plans
                             </button>
@@ -31,7 +30,6 @@ const NavbarUsers = ()=> {
                         <div className='flex flex-col items-center cursor-pointer'>
                             <FontAwesomeIcon icon={faDumbbell} size="sm" style={{ width: '18px', height: '18px' }} />
                             <button className='pl-2' onClick={() => {
-                                console.log(110)
                             }}>
                                 Muscles
                             </button>

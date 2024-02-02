@@ -3,10 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import musclesData from "../MuscleData/Muscles";
 import { MuscleGroup } from '../MuscleData/Muscles';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function Muscles() {
+  const router = useRouter()
+
   const [clickState, setClickState] = useState<Record<number, number>>(
     Object.fromEntries(Object.keys(musclesData).map(key => [parseInt(key), 0]))
   );
@@ -19,8 +21,8 @@ export default function Muscles() {
       [clickId]: prevState[clickId] === 0 ? 1 : 0
     }));
   };
-  const JumpAction = (selectedMove: string) =>()=>{
-    console.log(selectedMove)
+  const JumpAction = (selectedMuscle: string) =>{
+    router.push(`/muscles/${encodeURIComponent(selectedMuscle)}`);
 
   }
 
@@ -35,19 +37,23 @@ export default function Muscles() {
 
               return (
                 <li key={id}>
-                  <div className='cursor-pointer' onClick={() => ClickAction(id)}>
-                    <strong>{name_cn}</strong>
-                    <strong>{name_en}</strong>
+                  
+                  <div className='flex flex-row items-center'>
+                    <div className='cursor-pointer' onClick={() => ClickAction(id)}>
+                      <strong className='mr-2 mt-2 py-1'>{name_cn}</strong>
+                      <strong className='mr-4 mt-2 py-1'>{name_en}</strong>
+                    </div>
+                    <button className="rounded-lg bg-green-500 px-2 py-1 text-sm my-1 " onClick={()=> JumpAction(name_en)}>Click</button>
+
                   </div>
+
                   {clickState[id] === 1 && (
                     <ul>
                       {training_moves.map((move, index) => (
                         <li key={index} className='cursor-pointer'>
-                          <Link href={`/muscles/${encodeURIComponent(move)}`}>
                             <strong>
                               {move}
                             </strong>
-                          </Link>
                         </li>
                       ))}
                     </ul>
