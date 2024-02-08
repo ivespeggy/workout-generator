@@ -19,7 +19,6 @@ export default function MusclePage({params}:{
             height={350}
             alt="Picture of the author"
             />
-
             <strong className='p-4'>
                 {selectedMoveName}
             </strong>

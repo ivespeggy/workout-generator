@@ -1,3 +1,4 @@
+import { randomIntUtils } from "../Utils/randomInt"
 export interface MuscleGroup {
     id: number
     name_en: string
@@ -160,15 +161,29 @@ const musclesData: Record<number, MuscleGroup> = {
    * @bool => find results
    */
 
-export class  MuscleGroupUtils{
+export class MuscleGroupUtils{
   static searchForMuscle(name: string): MuscleGroup[]{
-    const result: MuscleGroup[] = []
+    var result: MuscleGroup[] = []
     for (const key in musclesData){
       if(name.toLowerCase() === musclesData[key].name_en.toLowerCase()){
         result.push(musclesData[key])
       }
     }
     return result
+  }
+
+  static generateRandomMuscleMove(number: number): MuscleGroup[]{
+    var res: MuscleGroup[] = []
+    let muscleObjectKey = Object.keys(musclesData).map(k => Number(k))
+    let length = muscleObjectKey.length
+    for (let i = 0; i < number; i++){
+      const randIndex:number = randomIntUtils.generateRandomInteger(0, length - 1)
+      const muslceGroup = musclesData[muscleObjectKey[randIndex]]
+      res.push(muslceGroup)
+      // console.log(muslceGroup)
+
+    }
+    return res
   }
 }
 export default musclesData
