@@ -17,13 +17,12 @@ const plans = ()=>{
                                 </li>
                             ))}
                             </ul>
-
-
                     </li>
                     
                 )
             )}
         </strong>
+        
         </>
     )
 }
