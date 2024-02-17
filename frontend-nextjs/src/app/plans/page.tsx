@@ -7,19 +7,25 @@ const plans = ()=>{
     const daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [randomMuscles, setRandomMuscles] = useState<MuscleGroup[]>([]);
+    const [detailedPlan, setDetailedPlan] = useState<DetailedPlan | null>(null) //preset to null
+    
     useEffect(()=>{
         const muscles = MuscleGroupUtils.generateRandomMuscleMove(7)
         setRandomMuscles(muscles)
     },[])
     
 
-    const hardcodedPlan: DetailedPlan = {
-        selectedDaysOfWeek: ['Monday', 'Tuesday', 'Wednesday'],
-        numberOfDays: 3,
-        selectedMuscleIndex: 0, 
-        selectedMoveIndex: [0, 2] 
-    };
-    
+    const handleClose = (plan?: DetailedPlan)=>{
+        setPopupOpen(false)
+        console.log("1111")
+        setDetailedPlan(plan !== undefined ? plan : null)
+        console.log(detailedPlan)
+
+        console.log("22")
+
+    }
+
+
 
     return(
         <>
@@ -45,7 +51,7 @@ const plans = ()=>{
         }}>
             Create Your Plan
           </button>
-        <CreatePlan isOpen={isPopupOpen} onClose={()=> setPopupOpen(false)} purpose={hardcodedPlan}/>
+        <CreatePlan isOpen={isPopupOpen} onClose={handleClose}/>
         </>
     )
 }
