@@ -1,21 +1,19 @@
-import react from 'react'
-
-interface DetailedPlan{
+export interface DetailedPlan{
     selectedDaysOfWeek: string[]
     numberOfDays: number
     selectedMuscleIndex: number
     selectedMoveIndex: number[]
 }
-interface CreatePlanProp{
+export interface CreatePlanProp{
     isOpen: boolean
     onClose: ()=> void
     purpose: DetailedPlan
 }
 
-const PopupWindow: React.FC<CreatePlanProp> = ({isOpen,onClose,purpose}) =>{
+const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose,purpose}) =>{
     if (!isOpen) return null;
-    console.log(purpose)
-    var displayPurpose:String = ""
+    // console.log(purpose)
+    // var displayPurpose:String = ""
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
@@ -30,4 +28,4 @@ const PopupWindow: React.FC<CreatePlanProp> = ({isOpen,onClose,purpose}) =>{
     )
 }
 
- export default PopupWindow
+ export default CreatePlan

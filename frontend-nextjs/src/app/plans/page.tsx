@@ -1,8 +1,27 @@
-import { MuscleGroupUtils } from "../MuscleData/Muscles";
+'use client'
+import { MuscleGroup, MuscleGroupUtils } from "../MuscleData/Muscles";
+import CreatePlan from "../compoents/PlansComponents/CreatePlans";
+import { useEffect, useState } from "react";
+import { CreatePlanProp, DetailedPlan } from "../compoents/PlansComponents/CreatePlans";
 const plans = ()=>{
     const daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    const randomMuscles = MuscleGroupUtils.generateRandomMuscleMove(7)
     // console.log(randomMuscles)
+    const [randomMuscles, setRandomMuscles] = useState<MuscleGroup[]>([]);
+
+    useEffect(()=>{
+        const muscles =MuscleGroupUtils.generateRandomMuscleMove(7)
+        setRandomMuscles(muscles)
+    },[])
+    const [isPopupOpen, setPopupOpen] = useState(false);
+
+    const hardcodedPlan: DetailedPlan = {
+        selectedDaysOfWeek: ['Monday', 'Tuesday', 'Wednesday'],
+        numberOfDays: 3,
+        selectedMuscleIndex: 0, 
+        selectedMoveIndex: [0, 2] 
+    };
+    
+
     return(
         <>
         <h1 className="text-xl mb-4"><strong>Example Work Plans</strong></h1>
@@ -22,7 +41,10 @@ const plans = ()=>{
                 )
             )}
         </strong>
-        
+        <button className="border p-2 rounded mt-2 bg-green-500">
+            Create Your Plan
+          </button>
+        <CreatePlan isOpen={isPopupOpen} onClose={()=> setPopupOpen(false)} purpose={hardcodedPlan}/>
         </>
     )
 }
