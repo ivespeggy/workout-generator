@@ -36,7 +36,17 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-4 rounded"> 
           <form onSubmit={handleSubmit} className="space-y-4">
+            Click the pixel to select your rest day
             <div>
+              <div className="flex items-center space-x-4">
+                <ColorSquare d={daysOfWeekChar.M}/>
+                <ColorSquare d={daysOfWeekChar.T}/>
+                <ColorSquare d={daysOfWeekChar.W}/>
+                <ColorSquare d={daysOfWeekChar.R}/>
+                <ColorSquare d={daysOfWeekChar.F}/>
+                <ColorSquare d={daysOfWeekChar.S}/>
+                <ColorSquare d={daysOfWeekChar.U}/>
+              </div>
 
               <label htmlFor="week" className="block">Week</label>
               <input id="name" name="name" type="text" required className="mt-1 p-2 border rounded"/>
