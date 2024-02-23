@@ -1,5 +1,6 @@
+'use client'
 import React from 'react';
-
+import { useState } from 'react';
 export enum daysOfWeekChar{
     M = "M",
     T = "T",
@@ -12,14 +13,27 @@ export enum daysOfWeekChar{
 }
 interface ColorSquareProp{
     d: daysOfWeekChar
+    
 }
 const ColorSquare:React.FC<ColorSquareProp> = ({d})=>{
+    const [isSelected, setSelected] = useState(true)
 
+    const handleClickAction = ()=>{
+        setSelected(!isSelected)
+    }
     return (
         <div>
         {d}
-        <div className="w-4 h-4 bg-green-500">
-        </div>
+        {isSelected?
+                <div className="w-4 h-4 bg-green-500" onClick={handleClickAction}>
+                </div>
+                :
+                <div className="w-4 h-4 bg-red-500" onClick={handleClickAction}>
+                </div>
+
+                
+            
+        }
         
 
         </div>
