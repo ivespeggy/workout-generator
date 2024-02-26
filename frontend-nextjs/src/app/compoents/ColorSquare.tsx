@@ -13,14 +13,18 @@ export enum daysOfWeekChar{
 }
 interface ColorSquareProp{
     d: daysOfWeekChar
+    selectOnChange?: (isSelected: boolean,d:daysOfWeekChar)=> void
     
 }
-const ColorSquare:React.FC<ColorSquareProp> = ({d})=>{
+const ColorSquare:React.FC<ColorSquareProp> = ({d,selectOnChange})=>{
     const [isSelected, setSelected] = useState(true)
 
     const handleClickAction = ()=>{
-        setSelected(!isSelected)
+        const newSelectState = !isSelected
+        setSelected(newSelectState)
+        selectOnChange?.(newSelectState,d)
     }
+
     return (
         <div>
         {d}
