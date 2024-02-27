@@ -1,7 +1,7 @@
 import ColorSquare from "../ColorSquare"
 import { daysOfWeekChar } from "../ColorSquare"
 import React, { useState } from 'react';
-
+import musclesData, { MuscleGroup, MuscleGroupUtils } from "../../MuscleData/Muscles";
 export interface DetailedPlan{
     selectedDaysOfWeek: string[]
     numberOfDays: number
@@ -35,6 +35,8 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
           return daysOfWeekChar.S
         case "Sunday":
           return daysOfWeekChar.U
+        default:
+          return daysOfWeekChar.M //error, should not happen though.
       }
     }
     
@@ -48,6 +50,15 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       S: true,
       U: true,
     })
+    const [selectedOptions, setSelectedOptions] = useState({
+      M: "",
+      T: "",
+      W: "",
+      R: "",
+      F: "",
+      S: "",
+      U: ""
+    })
   
       const hardcodedPlan: DetailedPlan = {
       selectedDaysOfWeek: ['Monday', 'Tuesday', 'Wednesday'],
@@ -58,13 +69,14 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
   
     const handleSubmit = ()=> {
       console.log("Submit button handled")
+      console.log(selectedOptions)
     }
     const handleOnClose = ()=> {
 
       onClose(hardcodedPlan)
 
     }
-    const handleSelectOnChange = (isSelected: boolean,d:daysOfWeekChar) =>{
+    const handleSelectOnChange = (isSelected: boolean, d:daysOfWeekChar) =>{
       console.log(`New Selected State: ${isSelected} d is ${d}`)
       setSelectedDays(prev =>({
         ...prev,
@@ -72,6 +84,27 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       }))
     }
 
+    const handleOptionOnChange = (day: daysOfWeekChar, value: string) =>{
+      setSelectedOptions(prev =>({
+        ...prev,
+        [day]:value
+      }))
+    }
+
+    const dynamicWorkoutBodyparts = (index:number, dayChar: daysOfWeekChar)=>{
+      return (
+        <select id={`day-${index}`} name={`day-${index}`} className="mt-1 p-2 border rounded" onChange={(e) =>handleOptionOnChange(dayChar,e.target.value)}>
+          {
+            Object.values(musclesData).map((muscle: MuscleGroup) =>{
+              const {id, name_cn, name_en, training_moves} = muscle
+              return (
+                <option key={id} value={name_en}>{name_en}</option>
+              )
+            })
+          }
+      </select>
+      )
+    }
     return (
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-4 rounded"> 
@@ -90,14 +123,11 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
               {weekDays.map((day, index) => {
             const dayChar = findWeekdayChar(day);
             return selectedDays[dayChar!] ? (
+
               <div key={index}>
                 <label htmlFor={`day-${index}`} className="block">{day}</label>
-                <input 
-                  id={`day-${index}`} 
-                  name={`day-${index}`} 
-                  type="text" 
-                  required 
-                  className="mt-1 p-2 border rounded" />
+                {dynamicWorkoutBodyparts(index, dayChar)}
+
               </div>
             ) : null
           })}

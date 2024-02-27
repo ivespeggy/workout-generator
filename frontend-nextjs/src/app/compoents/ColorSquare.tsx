@@ -9,7 +9,6 @@ export enum daysOfWeekChar{
     F = "F",
     S = "S",
     U = "U"
-
 }
 interface ColorSquareProp{
     d: daysOfWeekChar
