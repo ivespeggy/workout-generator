@@ -38,13 +38,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       }
     }
     
-    const findSelectedays = (inputDay:string)=>{
-      for (const day in selectedDays){
-        if (inputDay === day){
-          return day
-        }
-      }
-    }
+
     const [selectedDays, setSelectedDays] = useState({
       M: true,
       T: true,
@@ -53,7 +47,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       F: true,
       S: true,
       U: true,
-    });
+    })
   
       const hardcodedPlan: DetailedPlan = {
       selectedDaysOfWeek: ['Monday', 'Tuesday', 'Wednesday'],
@@ -71,7 +65,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
 
     }
     const handleSelectOnChange = (isSelected: boolean,d:daysOfWeekChar) =>{
-      console.log(`New Selected State: ${isSelected} d is ${d}`);
+      console.log(`New Selected State: ${isSelected} d is ${d}`)
       setSelectedDays(prev =>({
         ...prev,
         [d]: isSelected
@@ -105,7 +99,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
                   required 
                   className="mt-1 p-2 border rounded" />
               </div>
-            ) : null;
+            ) : null
           })}
 
 
