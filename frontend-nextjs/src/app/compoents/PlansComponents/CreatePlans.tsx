@@ -105,7 +105,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
 
             </div>
             <div className="flex justify-between">
-            <button type="submit" className="border p-2 rounded bg-blue-500 text-white w-24 h-10">Submit</button>
+            <button onClick={handleSubmit} type="submit" className="border p-2 rounded bg-blue-500 text-white w-24 h-10">Submit</button>
             <button onClick={handleOnClose} className="border p-2 rounded bg-red-500 text-white w-24 h-10">Close</button>
             </div>
 
