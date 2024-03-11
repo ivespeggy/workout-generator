@@ -1,7 +1,8 @@
 import ColorSquare from "../ColorSquare"
 import { daysOfWeekChar } from "../ColorSquare"
-import React, { useState } from 'react';
-import musclesData, { MuscleGroup, MuscleGroupUtils } from "../../MuscleData/Muscles";
+import React, { useState } from 'react'
+import musclesData from "../../MuscleData/Muscles"
+import { MuscleGroup, MuscleGroupUtils } from "../../MuscleData/Muscles"
 export interface DetailedPlan{
     selectedDaysOfWeek: string[]
     numberOfDays: number
@@ -59,22 +60,34 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       S: "",
       U: ""
     })
-  
-      const hardcodedPlan: DetailedPlan = {
+
+    const OptionSelectState = (): Map<string, boolean>=> {
+      const opitonList = MuscleGroupUtils.retrieveName()
+
+      var isMuscleSelectedMap = new Map<string, boolean>()
+      for (const muscle of opitonList){
+        isMuscleSelectedMap.set(muscle,false)
+      }
+      return isMuscleSelectedMap
+    }
+
+    const [option, setOption] = useState(OptionSelectState)
+
+
+
+    const hardcodedPlan: DetailedPlan = {
       selectedDaysOfWeek: ['Monday', 'Tuesday', 'Wednesday'],
       numberOfDays: 3,
       selectedMuscleIndex: 0, 
       selectedMoveIndex: [0, 2] 
-    };
+    }
   
     const handleSubmit = ()=> {
       console.log("Submit button handled")
       console.log(selectedOptions)
     }
     const handleOnClose = ()=> {
-
       onClose(hardcodedPlan)
-
     }
     const handleSelectOnChange = (isSelected: boolean, d:daysOfWeekChar) =>{
       console.log(`New Selected State: ${isSelected} d is ${d}`)
@@ -89,18 +102,38 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
         ...prev,
         [day]:value
       }))
+
+      
+      setOption(prev =>{
+        const newMap = new Map(prev)
+        const muscleSelectBool = option.get(value)
+        newMap.set(value,!muscleSelectBool)
+        return newMap
+        //worked, but only updates when after the second updates.
+      })
+
+      console.log("updated Option")
+      console.log(option)
+
     }
 
     const dynamicWorkoutBodyparts = (index:number, dayChar: daysOfWeekChar)=>{
       return (
         <select id={`day-${index}`} name={`day-${index}`} className="mt-1 p-2 border rounded" onChange={(e) =>handleOptionOnChange(dayChar,e.target.value)}>
+            <option value="">Please Select Muscle</option> 
           {
-            Object.values(musclesData).map((muscle: MuscleGroup) =>{
-              const {id, name_cn, name_en, training_moves} = muscle
-              return (
-                <option key={id} value={name_en}>{name_en}</option>
-              )
-            })
+
+            Array.from(option.entries()).map(([muscleName,visible],index) =>(
+              <option key={index + muscleName} value={muscleName}>
+                {
+                  muscleName
+                }
+                
+              </option>
+
+            ))
+            
+
           }
       </select>
       )

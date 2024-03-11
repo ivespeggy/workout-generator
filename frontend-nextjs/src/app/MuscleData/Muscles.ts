@@ -185,5 +185,18 @@ export class MuscleGroupUtils{
     }
     return res
   }
+  static retrieveName(): string[] {
+    var res: string[] = []
+    Object.keys(musclesData).forEach((k)=>{
+      const key = parseInt(k,10)
+      const muscleGroup = musclesData[key]
+      res.push(muscleGroup.name_en)
+      // console.log(`English: ${muscleGroup.name_en}, Chinese: ${muscleGroup.name_cn}`);
+    })
+    return res
+
+  }
 }
+
+
 export default musclesData
