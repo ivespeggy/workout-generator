@@ -66,7 +66,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
 
       var isMuscleSelectedMap = new Map<string, boolean>()
       for (const muscle of opitonList){
-        isMuscleSelectedMap.set(muscle,false)
+        isMuscleSelectedMap.set(muscle,true)
       }
       return isMuscleSelectedMap
     }
@@ -82,10 +82,26 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       selectedMoveIndex: [0, 2] 
     }
   
-    const handleSubmit = ()=> {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
       console.log("Submit button handled")
       console.log(selectedOptions)
-    }
+    
+      let checkFlg = true;
+      for (const option of Object.values(selectedOptions)) {
+        if (option === "") {
+          checkFlg = false
+          alert("Please Complete your selection")
+          return
+        }
+      }
+    
+      if (checkFlg) {
+        onClose(hardcodedPlan)
+      }
+    }    
+
+
     const handleOnClose = ()=> {
       onClose(hardcodedPlan)
     }
@@ -97,51 +113,56 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       }))
     }
 
-    const handleOptionOnChange = (day: daysOfWeekChar, value: string) =>{
-      setSelectedOptions(prev =>({
+    const handleOptionOnChange = (dayChar: daysOfWeekChar, value: string) =>{
+      if (value === "") {
+        console.log("Default option selected, no action needed.");
+
+        return;
+      }
+    
+      setSelectedOptions(prev => ({
         ...prev,
-        [day]:value
-      }))
-
-      
-      setOption(prev =>{
-        const newMap = new Map(prev)
-        const muscleSelectBool = option.get(value)
-        newMap.set(value,!muscleSelectBool)
-        return newMap
-        //worked, but only updates when after the second updates.
+        [dayChar]: value
+      }));
+    
+      setOption(prev => {
+        const newMap = new Map(prev);
+        const muscleSelectBool = prev.get(value);
+        newMap.set(value, !muscleSelectBool);
+        console.log("Bool is"+muscleSelectBool)
+        return newMap;
       })
-
-      console.log("updated Option")
-      console.log(option)
-
     }
 
-    const dynamicWorkoutBodyparts = (index:number, dayChar: daysOfWeekChar)=>{
+
+
+    const dynamicWorkoutBodyparts = (index: number, dayChar: daysOfWeekChar) => {
+      const currentSelectedValue = selectedOptions[dayChar as keyof typeof selectedOptions] || ""
+    
       return (
-        <select id={`day-${index}`} name={`day-${index}`} className="mt-1 p-2 border rounded" onChange={(e) =>handleOptionOnChange(dayChar,e.target.value)}>
-            <option value="">Please Select Muscle</option> 
-          {
-
-            Array.from(option.entries()).map(([muscleName,visible],index) =>(
-              <option key={index + muscleName} value={muscleName}>
-                {
-                  muscleName
-                }
-                
-              </option>
-
-            ))
-            
-
-          }
-      </select>
+        <select 
+          id={`day-${index}`} 
+          name={`day-${index}`} 
+          value={currentSelectedValue || ""}
+          className="mt-1 p-2 border rounded" 
+          onChange={(e) => handleOptionOnChange(dayChar, e.target.value)}
+        >
+          <option value="">Please Select Muscle</option>
+          {Array.from(option.keys()).map((muscleName, idx) => (
+          (
+              <option key={idx + muscleName} value={muscleName}>{muscleName}</option>
+            ) 
+          ))}
+        </select>
       )
     }
+    
+
+    
     return (
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-4 rounded"> 
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
             Click the pixel to select your rest day
             <div>
               <div className="flex items-center space-x-4">
@@ -154,21 +175,23 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
                 <ColorSquare d={daysOfWeekChar.U} selectOnChange={handleSelectOnChange}/>
               </div>
               {weekDays.map((day, index) => {
-            const dayChar = findWeekdayChar(day);
-            return selectedDays[dayChar!] ? (
+              const dayChar = findWeekdayChar(day)
+              console.log(dayChar)
 
-              <div key={index}>
-                <label htmlFor={`day-${index}`} className="block">{day}</label>
-                {dynamicWorkoutBodyparts(index, dayChar)}
+              return selectedDays[dayChar!] ? (
+                <div key={index}>
+                  <label htmlFor={`day-${index}`} className="block">{day}</label>
+                  {dynamicWorkoutBodyparts(index, dayChar)}
 
-              </div>
-            ) : null
+                </div>
+                ) 
+                : null
           })}
 
 
             </div>
             <div className="flex justify-between">
-            <button onClick={handleSubmit} type="submit" className="border p-2 rounded bg-blue-500 text-white w-24 h-10">Submit</button>
+            <button type="submit" className="border p-2 rounded bg-blue-500 text-white w-24 h-10">Submit</button>
             <button onClick={handleOnClose} className="border p-2 rounded bg-red-500 text-white w-24 h-10">Close</button>
             </div>
 
