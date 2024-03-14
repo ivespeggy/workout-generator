@@ -112,6 +112,9 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
     
       if (checkFlg) {
         console.log("Window Closed!")
+        console.log(selectedDays)
+        console.log(selectedOptions)
+
         onClose()
       }
     }    
