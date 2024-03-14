@@ -84,20 +84,35 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
   
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      console.log("Submit button handled")
-      console.log(selectedOptions)
+      // console.log("Submit button handled")
     
       let checkFlg = true;
-      for (const option of Object.values(selectedOptions)) {
-        if (option === "") {
-          checkFlg = false
-          alert("Please Complete your selection")
-          return
+      for (const [optionKey,optionValue] of Object.entries(selectedOptions)) {
+        // console.log(option)
+
+        // const isToggleOn = selectedDays[dayChr]
+        if (optionValue === "" ) {
+          // alert("Please Complete your selection")
+          console.log("Incomplete selection")
+          const dayChr = optionKey.toString() as keyof typeof selectedDays
+
+          console.log("dayChr Select is "+ selectedDays[dayChr])
+          if(!selectedDays[dayChr]){
+            checkFlg = true
+          }
+          else{
+            checkFlg = false
+            alert("You have incomplete selections")
+          }
+          break
+          // return
         }
       }
+      
     
       if (checkFlg) {
-        onClose(hardcodedPlan)
+        console.log("Window Closed!")
+        onClose()
       }
     }    
 
@@ -106,7 +121,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
       onClose(hardcodedPlan)
     }
     const handleSelectOnChange = (isSelected: boolean, d:daysOfWeekChar) =>{
-      console.log(`New Selected State: ${isSelected} d is ${d}`)
+      // console.log(`New Selected State: ${isSelected} d is ${d}`)
       setSelectedDays(prev =>({
         ...prev,
         [d]: isSelected
@@ -129,7 +144,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
         const newMap = new Map(prev);
         const muscleSelectBool = prev.get(value);
         newMap.set(value, !muscleSelectBool);
-        console.log("Bool is"+muscleSelectBool)
+        // console.log("Bool is"+muscleSelectBool)
         return newMap;
       })
     }
@@ -176,7 +191,7 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
               </div>
               {weekDays.map((day, index) => {
               const dayChar = findWeekdayChar(day)
-              console.log(dayChar)
+              // console.log(dayChar)
 
               return selectedDays[dayChar!] ? (
                 <div key={index}>
