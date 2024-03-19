@@ -6,7 +6,7 @@ from pdf_generator import PDFGenerator
 from config import PDF_FILE_NAME
 from otp import OTPAuth
 from dotenv import load_dotenv
-
+from redis_otp import RedisServer
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
@@ -19,11 +19,23 @@ recipient = os.getenv('TEST_RECP')
 @app.route('/send_email', methods=['POST'])
 def send_email():
     otp = OTPAuth(sender_email, password)
-    status_code = otp.send_email("123456", recipient)
-    if status_code["status"]:
-        return jsonify({'message': 'OTP sent successfully'}), 200
-    else:
-        return jsonify({'error' + status_code["msg"]}), 500
+
+    user_id = 'usr123456'
+    otp_code = '321321'
+    redis_server = RedisServer()
+    redis_server.store_otp(user_id=user_id, otp_code=otp_code)
+
+    code = redis_server.retrieve_otp(user_id)
+    print(code['status'])
+    print(code['data'])
+
+    return jsonify({'message': "hhahah"}), 200
+
+    # status_code = otp.send_email("123456", recipient)
+    # if status_code["status"]:
+    #     return jsonify({'message': 'OTP sent successfully'}), 200
+    # else:
+    #     return jsonify({'error' + status_code["msg"]}), 500
 
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
