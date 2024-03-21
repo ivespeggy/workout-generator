@@ -4,9 +4,10 @@ from reportlab.pdfgen import canvas
 from flask_cors import CORS
 from pdf_generator import PDFGenerator
 from config import PDF_FILE_NAME
-from otp import OTPAuth
+from send_email import EmailSender
 from dotenv import load_dotenv
-
+from redis_server import RedisServer
+from generate_otp_code import OTPGenerator
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
@@ -15,15 +16,50 @@ sender_email = os.getenv('TEST_EMAIL')
 password = os.getenv('PASSWORD')
 recipient = os.getenv('TEST_RECP')
 
+redis_server = RedisServer()
+generate_otp_code = OTPGenerator()
+email_sender = EmailSender(sender_email=sender_email, sender_password=password)
 
-@app.route('/send_email', methods=['POST'])
-def send_email():
-    otp = OTPAuth(sender_email, password)
-    status_code = otp.send_email("123456", recipient)
-    if status_code["status"]:
-        return jsonify({'message': 'OTP sent successfully'}), 200
+@app.route('/register',methods=['POST'])
+def register():
+    data = request.get_json()
+    if data is None:
+          return jsonify({'error':'Invalid JSON data'}), 400
+
+    # email is already validated in the frontend.
+    # get email from the response
+    email = data.get('email','default_email')
+    # register user to the database.
+
+    res = redis_server.register_user(email)
+    # generate otp code.
+    code = generate_otp_code.generate_code()
+    # register otp code with email address to the redis server.
+    redis_server.store_otp(user_email=email, otp_code=code)
+    email_sender.send_email(code,email)
+    
+
+
+    print("OTP Code is" +code)
+    if res['status']:
+        return jsonify({'message': res['message']}), res['response_status_code']
     else:
-        return jsonify({'error' + status_code["msg"]}), 500
+        return jsonify({'message': res['message']}), res['response_status_code']
+
+@app.route('/validate_otp', methods=['GET'])
+def validate_otp():
+    # they should get a otp from their email.
+    query_otp = request.args.get('otp', '0000000')
+    email = request.args.get('email','default_email')
+    otp_code_from_redis = redis_server.retrieve_otp(email)
+
+    print( otp_code_from_redis)
+    if otp_code_from_redis['data']== query_otp:
+
+        return jsonify({'message': "validated"}), 200
+    else:
+        return jsonify({'message': "failed"}), 449
+
 
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():

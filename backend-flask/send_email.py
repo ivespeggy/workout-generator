@@ -2,8 +2,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-class OTPAuth:
-    def __init__(self, sender_email, sender_password,smtp_server = "smtp.gmail.com", port = 587) -> None:
+class EmailSender:
+    def __init__(self, sender_email, sender_password, smtp_server = "smtp.gmail.com", port = 587) -> None:
         self.sender_email = sender_email
         self.sender_password = sender_password
         self.smtp_server = smtp_server
