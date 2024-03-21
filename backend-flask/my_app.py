@@ -4,7 +4,7 @@ from reportlab.pdfgen import canvas
 from flask_cors import CORS
 from pdf_generator import PDFGenerator
 from config import PDF_FILE_NAME
-from send_email import OTPAuth
+from send_email import EmailSender
 from dotenv import load_dotenv
 from redis_server import RedisServer
 from generate_otp_code import OTPGenerator
@@ -18,6 +18,7 @@ recipient = os.getenv('TEST_RECP')
 
 redis_server = RedisServer()
 generate_otp_code = OTPGenerator()
+email_sender = EmailSender(sender_email=sender_email, sender_password=password)
 
 @app.route('/register',methods=['POST'])
 def register():
@@ -35,7 +36,8 @@ def register():
     code = generate_otp_code.generate_code()
     # register otp code with email address to the redis server.
     redis_server.store_otp(user_email=email, otp_code=code)
-
+    email_sender.send_email(code,email)
+    
 
 
     print("OTP Code is" +code)
@@ -58,28 +60,6 @@ def validate_otp():
     else:
         return jsonify({'message': "failed"}), 449
 
-
-
-@app.route('/send_email', methods=['POST'])
-def send_email():
-    otp = OTPAuth(sender_email, password)
-
-    user_id = 'usr123456'
-    otp_code = '321321'
-    redis_server = RedisServer()
-    redis_server.store_otp(user_id=user_id, otp_code=otp_code)
-
-    code = redis_server.retrieve_otp(user_id)
-    print(code['status'])
-    print(code['data'])
-
-    return jsonify({'message': "hhahah"}), 200
-
-    # status_code = otp.send_email("123456", recipient)
-    # if status_code["status"]:
-    #     return jsonify({'message': 'OTP sent successfully'}), 200
-    # else:
-    #     return jsonify({'error' + status_code["msg"]}), 500
 
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
