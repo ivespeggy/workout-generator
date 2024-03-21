@@ -1,0 +1,29 @@
+2024-03-21 07:06:02
+   47 ./frontend-nextjs/src/app/compoents/ColorSquare.tsx
+   50 ./frontend-nextjs/src/app/compoents/NavigationBarComponents/Login.tsx
+   25 ./frontend-nextjs/src/app/compoents/NavigationBarComponents/Navbar.tsx
+   43 ./frontend-nextjs/src/app/compoents/NavigationBarComponents/NavBarUsers.tsx
+   47 ./frontend-nextjs/src/app/compoents/NavigationBarComponents/NavBarVistors.tsx
+   40 ./frontend-nextjs/src/app/compoents/NavigationBarComponents/PopupWindow.tsx
+   35 ./frontend-nextjs/src/app/compoents/NavigationBarComponents/Register.tsx
+  222 ./frontend-nextjs/src/app/compoents/PlansComponents/CreatePlans.tsx
+   22 ./frontend-nextjs/src/app/layout.tsx
+   14 ./frontend-nextjs/src/app/muscles/layout.tsx
+   68 ./frontend-nextjs/src/app/muscles/page.tsx
+   29 ./frontend-nextjs/src/app/muscles/[MuscleMoveName]/page.tsx
+   10 ./frontend-nextjs/src/app/page.tsx
+   14 ./frontend-nextjs/src/app/plans/layout.tsx
+   83 ./frontend-nextjs/src/app/plans/page.tsx
+  749 total
+   1 ./frontend-nextjs/src/app/declaration.d.ts
+ 201 ./frontend-nextjs/src/app/MuscleData/Muscles.ts
+   7 ./frontend-nextjs/src/app/Utils/randomInt.ts
+ 209 total
+   4 ./backend-flask/config.py
+   8 ./backend-flask/generate_otp_code.py
+  93 ./backend-flask/my_app.py
+  87 ./backend-flask/pdf_generator.py
+  75 ./backend-flask/redis_server.py
+  36 ./backend-flask/send_email.py
+ 303 total
+-------------------

@@ -20,6 +20,19 @@ redis_server = RedisServer()
 generate_otp_code = OTPGenerator()
 email_sender = EmailSender(sender_email=sender_email, sender_password=password)
 
+@app.route('/login', methods=['post'])
+def login():
+    data = request.get_json()
+    if data is None:
+         return jsonify({'error': 'Invalid JSON data'}), 400
+    email = data.get('email', 'default_email')
+    res = redis_server.retrieve_user_info(email)
+    redis_server.list_all_user(top_number=100)
+    if res['status']:
+        return jsonify({'message': res['message']}), res['response_status_code']
+    else:
+        return jsonify({'message': res['message']}), res['response_status_code']
+
 @app.route('/register',methods=['POST'])
 def register():
     data = request.get_json()
@@ -38,8 +51,6 @@ def register():
     redis_server.store_otp(user_email=email, otp_code=code)
     email_sender.send_email(code,email)
     
-
-
     print("OTP Code is" +code)
     if res['status']:
         return jsonify({'message': res['message']}), res['response_status_code']

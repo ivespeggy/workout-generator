@@ -15,4 +15,6 @@ docker run test1 <br>
 docker run -p 3000:3000 my-web-server<br>
 http://localhost:3000/<br>
 
+
+If you're seeing errors like "-bash: ./lines-of-code.sh: /bin/bash^M: bad interpreter", make sure change your linebreaks to LF.
 # To DO

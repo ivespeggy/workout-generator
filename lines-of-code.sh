@@ -7,5 +7,5 @@ echo $current_datetime >> $file_name
 
 find ./frontend-nextjs/src/app/ -name '*.tsx' -not -path '*/node_modules/*' | xargs wc -l >> $file_name
 find ./frontend-nextjs/src/app/ -name '*.ts' -not -path '*/node_modules/*' | xargs wc -l >> $file_name
-find ./backend-flask/ -name 'env' -prune -o -name '*.py' -print0 | xargs -0 wc -l >> $file_name
+find ./backend-flask/ \( -name 'env' -o -name 'venv' \) -prune -o -name '*.py' -print0 | xargs -0 wc -l >> $file_name
 echo "-------------------" >> $file_name
