@@ -1,10 +1,19 @@
 'use client'
-import React, {useState} from "react";
+import React, {useState} from "react"
+import useOtpCodeStore from "../../store/otpCodeStore"
 const Register = () => {
+    const otpBoxState = useOtpCodeStore(state => state.OtpInputBoxState)
+    const toggleOtpBoxState = useOtpCodeStore(state => state.setOtpInputState)
     const [registerState, setRegisterState] = useState({
         username: "",
         password: "",
     });
+    const handleButtonClick = (event:React.MouseEvent<HTMLButtonElement>)=>{
+        event.preventDefault()
+        console.log("butotn Clicked")
+        console.log(otpBoxState)
+        toggleOtpBoxState()
+    }
     return (
         <div className="register-wrapper">
             <form>
@@ -17,15 +26,17 @@ const Register = () => {
                         // onChange={handleChange}
                     />
                 </div>
-                <div className="input-group">
+                {
+                    otpBoxState &&
+                    <div className="input-group">
                     <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        // onChange={handleChange}
+                        type="text"
+                        name="otp-code"
+                        placeholder="enter your otp code"
                     />
                 </div>
-                <button type="submit" className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">
+                }
+                <button onClick={handleButtonClick} className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">
                     Register
                 </button>
             </form>

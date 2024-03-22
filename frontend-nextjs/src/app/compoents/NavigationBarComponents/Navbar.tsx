@@ -10,7 +10,7 @@ import NavBarVistors from './NavBarVistors';
 const Navbar = () => {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [purpose, setPurpose] = useState<'signup' | 'login' | 'initialization'>('initialization');
-    const [NavbarStates, setNavbarStates] = useState<'users' | 'vistors'>('vistors')
+    const [NavbarStates, setNavbarStates] = useState<'users' | 'vistors'>('users')
     
     return (
         <>
