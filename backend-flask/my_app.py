@@ -49,7 +49,7 @@ def register():
     code = generate_otp_code.generate_code()
     # register otp code with email address to the redis server.
     redis_server.store_otp(user_email=email, otp_code=code)
-    email_sender.send_email(code,email)
+    res = email_sender.send_email(code,email)
     
     print("OTP Code is" +code)
     if res['status']:
