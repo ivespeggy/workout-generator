@@ -44,14 +44,14 @@ def register():
     email = data.get('email','default_email')
     # register user to the database.
 
-    res = redis_server.register_user(email)
+    # res = redis_server.register_user(email)
     # generate otp code.
     code = generate_otp_code.generate_code()
     # register otp code with email address to the redis server.
     redis_server.store_otp(user_email=email, otp_code=code)
     res = email_sender.send_email(code,email)
     
-    print("OTP Code is" +code)
+    print("OTP Code is " +code)
     if res['status']:
         return jsonify({'message': res['message']}), res['response_status_code']
     else:
@@ -64,13 +64,15 @@ def validate_otp():
     email = request.args.get('email','default_email')
     otp_code_from_redis = redis_server.retrieve_otp(email)
 
-    print( otp_code_from_redis)
-    if otp_code_from_redis['data']== query_otp:
-
-        return jsonify({'message': "validated"}), 200
+    print(otp_code_from_redis)
+    if otp_code_from_redis['data'] == query_otp:
+        response = redis_server.register_user(email)
+        if response['status']:
+            return jsonify({'message': response['message']}), response['response_status_code']
+        else:
+            return jsonify({'message': response['message']}), response['response_status_code']
     else:
         return jsonify({'message': "failed"}), 449
-
 
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
