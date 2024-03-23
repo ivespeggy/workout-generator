@@ -25,14 +25,17 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
     }
 
     return (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-4 rounded">
-          {purpose === 'signup' ? <SignUp/> : <Login/>}
-          <button onClick={onClose} className="border p-2 rounded mt-2 bg-red-500">
-            Close
-          </button>
-        </div>
+
+    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+      <div className="relative bg-white p-4 rounded" style={{ minWidth: "300px" }}>
+        {purpose === 'signup' ? <SignUp/> : <Login />}
+        <button onClick={onClose} className="absolute top-0 right-0 m-2 border rounded-full bg-red-500 text-white text-lg flex items-center justify-center w-8 h-8">
+        &times;
+        </button>
+
       </div>
+    </div>
+
 
 
     )

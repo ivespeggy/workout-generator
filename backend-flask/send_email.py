@@ -8,7 +8,6 @@ class EmailSender:
         self.sender_password = sender_password
         self.smtp_server = smtp_server
         self.port = port
-    
     def send_email(self, otp, recipient)->dict:
         message = MIMEMultipart("alternative")
         message["Subject"] = "OTP"
@@ -29,8 +28,8 @@ class EmailSender:
             server.sendmail(self.sender_email, recipient, message.as_string())
             server.quit()
             print("OTP sent successfully.")
-            return {"status" : True, "msg":"OTP sent successfully."}
+            return {"status" : True, "message":"OTP sent successfully.","response_status_code":200}
         except Exception as e:
             print(f"Failed to send OTP. Error: {e}")
-            return {"status": False, "msg":str(e)}
+            return {"status": False, "message":"Not Sent for"+str(e),"response_status_code":404}
 
