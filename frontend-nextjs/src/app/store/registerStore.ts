@@ -22,12 +22,3 @@ export const useOtpTextfieldStore = create<OtpTextfieldStore>() ((set) => ({
     otpCode: '',
     setOtpInput: (InputCode: string) => set({ otpCode: InputCode }),
 }))
-
-
-
-// export const useOtpCodeStore = create<OtpCodeStore>() ((set)=>({
-//     OtpInputBoxState: false,
-//     setOtpInputState: () => set((state) =>({
-//         OtpInputBoxState: !state.OtpInputBoxState
-//     }))
-// }))
