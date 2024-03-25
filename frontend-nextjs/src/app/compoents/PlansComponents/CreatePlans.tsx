@@ -15,7 +15,7 @@ export interface CreatePlanProp{
 }
 
 const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
-    if (!isOpen) return null;
+    // if (!isOpen) return null;
     // console.log(purpose)
     // var displayPurpose:String = ""
     const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

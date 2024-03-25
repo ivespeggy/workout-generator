@@ -4,7 +4,7 @@ import CreatePlan from "../compoents/PlansComponents/CreatePlans"
 import { useEffect, useState } from "react"
 import { CreatePlanProp, DetailedPlan } from "../compoents/PlansComponents/CreatePlans"
 import jsPreviewPdf from "@js-preview/pdf";
-const plans = ()=>{
+const Plans = ()=>{
     const daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [randomMuscles, setRandomMuscles] = useState<MuscleGroup[]>([]);
@@ -43,7 +43,9 @@ const plans = ()=>{
             link.setAttribute('download', 'file.pdf')
             document.body.appendChild(link);
             link.click()
-            link.parentNode.removeChild(link)
+            if(link.parentNode){
+                link.parentNode.removeChild(link)
+            }
           } else {
             console.error('Server responded with ', response.status)
           }
@@ -81,4 +83,4 @@ const plans = ()=>{
         </>
     )
 }
-export default plans
+export default Plans

@@ -15,7 +15,7 @@ const Navbar = () => {
     return (
         <>
             <nav className='flex justify-between w-full items-center text-black'>
-            {NavbarStates === 'users' ? <NavBarVistors/> : <NavbarUsers/>}
+            {NavbarStates === 'vistors' ? <NavBarVistors/> : <NavbarUsers/>}
             </nav>
             <PopupWindow isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} purpose={purpose} />
         </>
