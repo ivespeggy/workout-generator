@@ -20,6 +20,17 @@ type OtpCodeCoolDownStore = {
     setCountDown: ()=>void,
     setDisabled: (status: boolean) => void
 }
+
+type SuccessMessage = {
+    msg: string,
+    setMsg: (msg:string)=>void
+
+}
+
+export const useSuccessMeesageStore = create<SuccessMessage>() ((set)=>({
+    msg : '',
+    setMsg: (msg:string) =>set({msg:msg})
+}))
 export const useOtpCodeCountDownStore = create<OtpCodeCoolDownStore>() ((set)=>({
     disabled: false,
     countdownSeconds:'120S',
@@ -40,9 +51,6 @@ export const useOtpCodeCountDownStore = create<OtpCodeCoolDownStore>() ((set)=>(
         set({disabled:true})
 
     }
-
-
-
 }))
 
 export const useSpinnerStore = create<LoadingSpinnerStore>() ((set) =>({
