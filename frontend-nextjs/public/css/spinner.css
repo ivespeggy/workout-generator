@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes spin-action {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-circle {
+  @apply w-10 h-10 border-4 border-blue-200 rounded-full border-t-green-500 mt-2;
+  animation: spin-action 2s linear infinite;
+}

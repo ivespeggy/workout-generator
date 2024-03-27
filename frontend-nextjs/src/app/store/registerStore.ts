@@ -9,7 +9,17 @@ type EmailStore = {
     email: string
     setEmail: (email: string) => void
 }
+type LoadingSpinnerStore = {
+    loadOn: boolean
+    setLoadOn: (status: boolean) => void
+}
 
+export const useSpinnerStore = create<LoadingSpinnerStore>() ((set) =>({
+    loadOn: false,
+    setLoadOn: (statusBool: boolean) => set({
+        loadOn: statusBool
+    })
+}))
 
 export const useEmailTextfieldStore = create<EmailStore>() ((set) =>({
     email: '',

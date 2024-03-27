@@ -1,9 +1,10 @@
 'use client'
 import React, {useState} from "react"
 import { useOtpCodeStore } from "../../store/useOtpCodeStore"
-import { useOtpTextfieldStore, useEmailTextfieldStore } from "../../store/registerStore"
+import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore } from "../../store/registerStore"
 import { requestOTP } from "../../service/requestOTP"
 import { validateOTP } from "../../service/validateOTP"
+import '../../../../public/css/spinner.css'
 const Register = () => {
     const otpBoxState = useOtpCodeStore(state => state.OtpInputBoxState)
     const toggleOtpBoxState = useOtpCodeStore(state => state.setOtpInputState)
@@ -14,7 +15,9 @@ const Register = () => {
     const otpCode = useOtpTextfieldStore(state => state.otpCode)
     const setOtpCode = useOtpTextfieldStore(state => state.setOtpInput)
     
-    
+    const spinnerStatus = useSpinnerStore(state => state.loadOn)
+    const setSpinnerStatus = useSpinnerStore(state => state.setLoadOn)
+
     const handleEmailOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
         setEmail(event.target.value)
     }
@@ -31,6 +34,8 @@ const Register = () => {
         console.log("Request OTP butotn Clicked")
         console.log(email)
         try{
+            setSpinnerStatus(!spinnerStatus)
+
             const data = await requestOTP(email)
             console.log(data)
             toggleOtpBoxState()
@@ -38,6 +43,8 @@ const Register = () => {
         catch (error){
             console.log(error)
         }
+        //set false after request
+        setSpinnerStatus(!spinnerStatus) 
     }
     const handleRegisterClick = async (event: React.MouseEvent<HTMLButtonElement>)=>{
 
@@ -88,11 +95,12 @@ const Register = () => {
                 </button>
 
                 </div>
-                {/* <div className="flex justify-center items-center h-screen">
-  <svg className="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-  </svg>
-</div> */}
+                {spinnerStatus&&
+                <div className="flex justify-center items-center">
+                <div className="loading-circle flex"></div>
+                <span className="self-center ml-2">Loading</span>
+                </div>
+                }
 
 
             </form>
