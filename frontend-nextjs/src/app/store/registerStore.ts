@@ -14,6 +14,37 @@ type LoadingSpinnerStore = {
     setLoadOn: (status: boolean) => void
 }
 
+type OtpCodeCoolDownStore = {
+    disabled: boolean,
+    countdownSeconds: string,
+    setCountDown: ()=>void,
+    setDisabled: (status: boolean) => void
+}
+export const useOtpCodeCountDownStore = create<OtpCodeCoolDownStore>() ((set)=>({
+    disabled: false,
+    countdownSeconds:'120S',
+    setDisabled:(statusBool:boolean)=> set({
+        disabled:statusBool
+
+    }),
+    setCountDown:()=>{
+        let seconds = 120
+        const interval1 = setInterval(()=>{
+            seconds -= 1
+            set({countdownSeconds:`${seconds}s`})
+            if (seconds <= 0){
+                set({disabled:false})
+                clearInterval(interval1)
+            }
+        },1000)
+        set({disabled:true})
+
+    }
+
+
+
+}))
+
 export const useSpinnerStore = create<LoadingSpinnerStore>() ((set) =>({
     loadOn: false,
     setLoadOn: (statusBool: boolean) => set({

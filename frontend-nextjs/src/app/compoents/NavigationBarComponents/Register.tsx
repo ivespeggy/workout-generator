@@ -1,7 +1,7 @@
 'use client'
 import React, {useState} from "react"
 import { useOtpCodeStore } from "../../store/useOtpCodeStore"
-import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore } from "../../store/registerStore"
+import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore, useOtpCodeCountDownStore } from "../../store/registerStore"
 import { requestOTP } from "../../service/requestOTP"
 import { validateOTP } from "../../service/validateOTP"
 import '../../../../public/css/spinner.css'
@@ -17,6 +17,11 @@ const Register = () => {
     
     const spinnerStatus = useSpinnerStore(state => state.loadOn)
     const setSpinnerStatus = useSpinnerStore(state => state.setLoadOn)
+
+
+    const countDownSeconds = useOtpCodeCountDownStore(state =>state.countdownSeconds)
+    const registerBtnStatus = useOtpCodeCountDownStore(state =>state.disabled)
+    const setCountDown = useOtpCodeCountDownStore(state => state.setCountDown)
 
     const handleEmailOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
         setEmail(event.target.value)
@@ -35,7 +40,7 @@ const Register = () => {
         console.log(email)
         try{
             setSpinnerStatus(!spinnerStatus)
-
+            setCountDown()
             const data = await requestOTP(email)
             console.log(data)
             toggleOtpBoxState()
@@ -87,12 +92,18 @@ const Register = () => {
                 </div>
                 }
                 <div className="flex">
-                <button onClick={(event) => handleRegisterClick(event)} className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-150 ease-in-out mr-auto">
+                <button onClick={(event) => handleRegisterClick(event)} disabled={true}className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-150 ease-in-out mr-auto w-28">
                     Register
                 </button>
-                <button onClick={(event)=>handleRequestOTPClick(event)} className="flex justify-center items-center px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-150 ease-in-out ml-auto">
-                    Rquest OTP
-                </button>
+                {registerBtnStatus?
+                        <button onClick={(event)=>handleRequestOTPClick(event)}disabled={registerBtnStatus} className="flex justify-center items-center px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-150 ease-in-out ml-auto w-28">
+                            {countDownSeconds}
+                        </button>
+                        :
+                        <button onClick={(event)=>handleRequestOTPClick(event)} className="flex justify-center items-center px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-150 ease-in-out ml-auto w-28">
+                            Rquest OTP
+                        </button>
+                }
 
                 </div>
                 {spinnerStatus&&
