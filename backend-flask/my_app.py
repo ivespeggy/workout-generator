@@ -24,7 +24,7 @@ email_sender = EmailSender(sender_email=sender_email, sender_password=password)
 def login():
     data = request.get_json()
     if data is None:
-         return jsonify({'error': 'Invalid JSON data'}), 400
+         return jsonify({'error': sender_email}), 400
     email = data.get('email', 'default_email')
     res = redis_server.retrieve_user_info(email)
     redis_server.list_all_user(top_number=100)
