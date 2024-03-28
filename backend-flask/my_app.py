@@ -92,4 +92,4 @@ def generate_pdf():
     return send_file(PDF_FILE_NAME, as_attachment=True)
 
 if __name__ == '__main__':
-        app.run(debug=True, port=6000)
+        app.run(debug=True, port=8080)
