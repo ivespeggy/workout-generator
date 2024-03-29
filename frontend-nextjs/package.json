@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@js-preview/pdf": "^1.6.4",
+    "email-validator": "^2.0.4",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",

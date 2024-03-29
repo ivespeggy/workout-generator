@@ -1,11 +1,20 @@
 'use client'
 import React, {useState} from "react"
 import { useOtpCodeStore } from "../../store/useOtpCodeStore"
-import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore, useOtpCodeCountDownStore, useSuccessMeesageStore } from "../../store/registerStore"
+import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore, useOtpCodeCountDownStore, useSuccessMeesageStore, useRegisterBtnStore } from "../../store/registerStore"
 import { requestOTP } from "../../service/requestOTP"
 import { validateOTP } from "../../service/validateOTP"
 import '../../../../public/css/spinner.css'
-const Register = () => {
+
+
+interface RegisterProp{
+    isOpen: boolean;
+    onClose: ()=> void;
+}
+
+
+
+const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
     const otpBoxState = useOtpCodeStore(state => state.OtpInputBoxState)
     const toggleOtpBoxState = useOtpCodeStore(state => state.setOtpInputState)
 
@@ -22,8 +31,13 @@ const Register = () => {
     const setSuccessMsg = useSuccessMeesageStore(state => state.setMsg)
 
     const countDownSeconds = useOtpCodeCountDownStore(state =>state.countdownSeconds)
-    const registerBtnStatus = useOtpCodeCountDownStore(state =>state.disabled)
+    const otpBtnStatus = useOtpCodeCountDownStore(state =>state.disabled)
     const setCountDown = useOtpCodeCountDownStore(state => state.setCountDown)
+
+    const registerBtnStatus = useRegisterBtnStore(event => event.disabled)
+    const setRegisterBtn = useRegisterBtnStore(event => event.setDisabled)
+
+
 
     const handleEmailOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
         setEmail(event.target.value)
@@ -52,6 +66,7 @@ const Register = () => {
                 setSpinnerStatus(false)
             }, 3000);
             setSuccessMsg("You OTP code has been sent")
+            setRegisterBtn(false)
 
         }
         catch (error){
@@ -63,16 +78,19 @@ const Register = () => {
             setSuccessMsg("Network error")
 
         }
+
         //set false after request
     }
-    const handleRegisterClick = async (event: React.MouseEvent<HTMLButtonElement>)=>{
+    const handleRegisterClick =  async (event: React.MouseEvent<HTMLButtonElement>)=>{
 
         event.preventDefault()
         console.log("register button clicked")
         try{
             const data = await validateOTP(email, otpCode)
             console.log(data)
-
+            console.log("register btn status"+registerBtnStatus)
+            console.log('Successed!')
+            onClose()
         }
         catch (error){
             console.log(error)
@@ -106,11 +124,11 @@ const Register = () => {
                 </div>
                 }
                 <div className="flex">
-                <button onClick={(event) => handleRegisterClick(event)} disabled={true}className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-150 ease-in-out mr-auto w-32">
+                <button onClick={(event) => handleRegisterClick(event)} disabled={registerBtnStatus}className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-150 ease-in-out mr-auto w-32">
                     Register
                 </button>
-                {registerBtnStatus?
-                        <button onClick={(event)=>handleRequestOTPClick(event)}disabled={registerBtnStatus} className="flex justify-center items-center px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-150 ease-in-out ml-auto w-32">
+                {otpBtnStatus?
+                        <button onClick={(event)=>handleRequestOTPClick(event)}disabled={otpBtnStatus} className="flex justify-center items-center px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-150 ease-in-out ml-auto w-32">
                             {countDownSeconds}
                         </button>
                         :
@@ -131,6 +149,7 @@ const Register = () => {
                     <span className="self-center ml-2">{susccessMsg}</span>
                  </div>
                 }
+                
 
 
             </form>

@@ -26,6 +26,17 @@ type SuccessMessage = {
     setMsg: (msg:string)=>void
 
 }
+type RegisterBtnStore = {
+    disabled: boolean,
+    setDisabled: (status: boolean) => void 
+}
+
+
+export const useRegisterBtnStore = create<RegisterBtnStore> () ((set) =>({
+    disabled: true,
+    setDisabled: (statusBool: boolean) => set({disabled: statusBool})
+}))
+
 
 export const useSuccessMeesageStore = create<SuccessMessage>() ((set)=>({
     msg : '',
