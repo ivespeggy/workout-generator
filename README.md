@@ -19,3 +19,6 @@ http://localhost:3000/<br>
 If you're seeing errors like "-bash: ./lines-of-code.sh: /bin/bash^M: bad interpreter", make sure change your linebreaks to LF.
 # To DO
 1. When sending email and recipient does not exist, otp code will still be generated for some reasons.
+
+# Issue - TO BE FIX
+1. When user close the register window, otp code message is still not removed or reset yet.

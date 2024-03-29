@@ -54,7 +54,6 @@ const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
     const handleRequestOTPClick = async (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
         console.log("Request OTP butotn Clicked")
-
         console.log(email)
         if(validate_email(email)){
             setSpinnerStatus(true)
