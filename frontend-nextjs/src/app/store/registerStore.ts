@@ -21,7 +21,7 @@ type OtpCodeCoolDownStore = {
     setDisabled: (status: boolean) => void
 }
 
-type SuccessMessage = {
+type MessageStore = {
     msg: string,
     setMsg: (msg:string)=>void
 
@@ -38,7 +38,7 @@ export const useRegisterBtnStore = create<RegisterBtnStore> () ((set) =>({
 }))
 
 
-export const useSuccessMeesageStore = create<SuccessMessage>() ((set)=>({
+export const useMessageStore = create<MessageStore>() ((set)=>({
     msg : '',
     setMsg: (msg:string) =>set({msg:msg})
 }))

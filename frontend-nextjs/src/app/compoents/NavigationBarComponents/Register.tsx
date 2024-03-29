@@ -1,11 +1,11 @@
 'use client'
 import React, {useState} from "react"
 import { useOtpCodeStore } from "../../store/useOtpCodeStore"
-import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore, useOtpCodeCountDownStore, useSuccessMeesageStore, useRegisterBtnStore } from "../../store/registerStore"
+import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore, useOtpCodeCountDownStore, useMessageStore, useRegisterBtnStore } from "../../store/registerStore"
 import { requestOTP } from "../../service/requestOTP"
 import { validateOTP } from "../../service/validateOTP"
 import '../../../../public/css/spinner.css'
-
+import * as EmailValidator from 'email-validator'
 
 interface RegisterProp{
     isOpen: boolean;
@@ -27,8 +27,8 @@ const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
     const spinnerStatus = useSpinnerStore(state => state.loadOn)
     const setSpinnerStatus = useSpinnerStore(state => state.setLoadOn)
 
-    const susccessMsg = useSuccessMeesageStore(state => state.msg)
-    const setSuccessMsg = useSuccessMeesageStore(state => state.setMsg)
+    const message = useMessageStore(state => state.msg)
+    const setMessage = useMessageStore(state => state.setMsg)
 
     const countDownSeconds = useOtpCodeCountDownStore(state =>state.countdownSeconds)
     const otpBtnStatus = useOtpCodeCountDownStore(state =>state.disabled)
@@ -54,37 +54,51 @@ const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
     const handleRequestOTPClick = async (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
         console.log("Request OTP butotn Clicked")
-        setSpinnerStatus(true)
 
         console.log(email)
-        try{
-            setCountDown()
-            const data = await requestOTP(email)
-            console.log(data)
-            toggleOtpBoxState()
-            setTimeout(() => {
-                setSpinnerStatus(false)
-            }, 3000);
-            setSuccessMsg("You OTP code has been sent")
-            setRegisterBtn(false)
-
-        }
-        catch (error){
+        if(validate_email(email)){
+            setSpinnerStatus(true)
+            try{
+                setCountDown()
+                const data = await requestOTP(email)
+                console.log(data)
+                toggleOtpBoxState()
+                setTimeout(() => {
+                    setSpinnerStatus(false)
+                }, 3000);
+                setMessage("You OTP code has been sent")
+                setRegisterBtn(false)
+            }
+            catch (error){
             console.log("error request")
             console.log(error)
             setTimeout(() => {
-                setSpinnerStatus(false)
-            }, 3000);
-            setSuccessMsg("Network error")
-
+                setSpinnerStatus(false)}, 3000);
+                setMessage("Network error")
+            }
+        }
+        else{
+            setMessage("Please retry your email.")
         }
 
         //set false after request
+    }
+    const validate_email = (email:string): boolean =>{
+        if(email.length == 0){
+            return false
+        }
+        else if(EmailValidator.validate(email)){
+            return true
+        }
+        else{
+            return false
+        }
     }
     const handleRegisterClick =  async (event: React.MouseEvent<HTMLButtonElement>)=>{
 
         event.preventDefault()
         console.log("register button clicked")
+        
         try{
             const data = await validateOTP(email, otpCode)
             console.log(data)
@@ -146,7 +160,7 @@ const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
                 :
                 <div className="flex justify-center items-center">
                     <div className=""></div>
-                    <span className="self-center ml-2">{susccessMsg}</span>
+                    <span className="self-center ml-2">{message}</span>
                  </div>
                 }
                 
