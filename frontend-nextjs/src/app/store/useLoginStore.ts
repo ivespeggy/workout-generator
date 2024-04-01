@@ -14,6 +14,7 @@ type RegisterMsgDisplayStatus = {
     setStatus: (bool: boolean) =>void
 }
 
+
 export const useRegisterMsgDisplayStatusStore = create<RegisterMsgDisplayStatus>()((set) =>({
     status: false,
     setStatus: (InputBool: boolean) => set({status:InputBool})

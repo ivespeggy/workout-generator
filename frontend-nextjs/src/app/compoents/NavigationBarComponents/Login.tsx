@@ -37,16 +37,21 @@ const Login:React.FC<LoginProp> = ({isOpen,onClose}) => {
         event.preventDefault()
         if(validate_email(email)){
             setOnDisplay(true)
-            setMessage("We are processing...")
             try {
+                
+                setMessage("We are processing...")
                 const data = await loginRequest(email)
+                setTimeout(() => {
+                    onClose()              
+                }, 1500);
+
 
 
                 
             } 
             catch (error) {
                 console.log(error)
-                
+                setMessage("Please double-check your email.")                
             }
         }
         else{
@@ -85,6 +90,7 @@ const Login:React.FC<LoginProp> = ({isOpen,onClose}) => {
                     <div className=""></div>
                     <span className="self-center ml-2">{message}</span>
                  </div>}
+
                 
 
                 <button onClick={(event)=>{handleSubmit(event)}}type="submit" className="flex justify-center items-center px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">
