@@ -26,9 +26,10 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
 
     return (
 
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50" style={{zIndex:10000}}>
+        {/* Register and login should be on top of every component, hence z-index is 100000*/}
       <div className="relative bg-white p-4 rounded" style={{ minWidth: "300px" }}>
-        {purpose === 'signup' ? <Register isOpen={true} onClose={onClose}/> : <Login />}
+        {purpose === 'signup' ? <Register isOpen={true} onClose={onClose}/> : <Login isOpen={true} onClose={onClose} />}
         <button onClick={onClose} className="absolute top-0 right-0 m-2 border rounded-full bg-red-500 text-white text-lg flex items-center justify-center w-8 h-8">
         &times;
         </button>

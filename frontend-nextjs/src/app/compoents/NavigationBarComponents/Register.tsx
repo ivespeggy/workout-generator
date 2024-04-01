@@ -5,6 +5,7 @@ import { useOtpTextfieldStore, useEmailTextfieldStore, useSpinnerStore, useOtpCo
 import { requestOTP } from "../../service/requestOTP"
 import { validateOTP } from "../../service/validateOTP"
 import '../../../../public/css/spinner.css'
+import { validate_email } from "../../Utils/validate_email"
 import * as EmailValidator from 'email-validator'
 
 interface RegisterProp{
@@ -81,17 +82,6 @@ const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
         }
 
         //set false after request
-    }
-    const validate_email = (email:string): boolean =>{
-        if(email.length == 0){
-            return false
-        }
-        else if(EmailValidator.validate(email)){
-            return true
-        }
-        else{
-            return false
-        }
     }
     const handleRegisterClick =  async (event: React.MouseEvent<HTMLButtonElement>)=>{
 
