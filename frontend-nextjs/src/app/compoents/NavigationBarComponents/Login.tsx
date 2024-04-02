@@ -6,7 +6,7 @@ import { validate_email } from '../../Utils/validate_email';
 
 interface LoginProp{
     isOpen: boolean;
-    onClose: ()=> void;
+    onClose: (data:{outboundEmail?:string, purpose: 'signup' | 'login' | 'initialization'})=> void;
 }
 
 
@@ -42,7 +42,7 @@ const Login:React.FC<LoginProp> = ({isOpen,onClose}) => {
                 setMessage("We are processing...")
                 const data = await loginRequest(email)
                 setTimeout(() => {
-                    onClose()              
+                    onClose({outboundEmail:email,purpose:'login'})              
                 }, 1500);
 
 
