@@ -14,8 +14,22 @@ type RegisterMsgDisplayStatus = {
     setStatus: (bool: boolean) =>void
 }
 
+type SharedLoginEmailInfoStore = {
+    email: string
+    purpose: 'signup' | 'login' | 'initialization'
+    setEmail: (inputEmail: string) => void
+    setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => void
+}
 
-export const useRegisterMsgDisplayStatusStore = create<RegisterMsgDisplayStatus>()((set) =>({
+export const useSharedLoginEmailInfoStore = create<SharedLoginEmailInfoStore>() ((set) =>({
+    email: '',
+    purpose:'initialization',
+    setEmail: (inputEmail: string) => set({email:inputEmail}),
+    setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => set({purpose:inputPurpose})
+
+}))
+
+export const useRegisterMsgDisplayStatusStore = create<RegisterMsgDisplayStatus>() ((set) =>({
     status: false,
     setStatus: (InputBool: boolean) => set({status:InputBool})
 }))

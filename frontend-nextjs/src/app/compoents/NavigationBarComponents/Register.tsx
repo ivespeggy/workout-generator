@@ -10,7 +10,7 @@ import * as EmailValidator from 'email-validator'
 
 interface RegisterProp{
     isOpen: boolean;
-    onClose: ()=> void;
+    onClose: (data:{outboundEmail?:string, purpose: 'signup' | 'login' | 'initialization'})=> void;
 }
 
 
@@ -93,7 +93,7 @@ const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
             console.log(data)
             console.log("register btn status"+registerBtnStatus)
             console.log('Successed!')
-            onClose()
+            onClose({outboundEmail:email,purpose:'signup'})
         }
         catch (error){
             console.log(error)
