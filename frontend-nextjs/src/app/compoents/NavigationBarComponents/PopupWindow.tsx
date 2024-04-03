@@ -61,14 +61,12 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
       <div className="relative bg-white p-4 rounded" style={{ minWidth: "300px" }}>
         {purpose === 'signup' ? 
         <Register isOpen={true} onClose={
-            ({outboundEmail:email, purpose:purpose}) => handleOnClose({email:email,purpose:purpose})
+            () => handleOnClose({purpose:purpose})
         } />
         : 
 
         // <Login isOpen={isOpen} onClose={(data) => onClose(data)} />
-        <Login isOpen={true} onClose={
-            ({outboundEmail:email, purpose:purpose}) => handleOnClose({email:email,purpose:purpose})
-            } />
+        <Login isOpen={true} onClose={() => handleOnClose({purpose:purpose})} />
         }
 
         <button onClick={()=>handleOnClose({purpose:'initialization'})} className="absolute top-0 right-0 m-2 border rounded-full bg-red-500 text-white text-lg flex items-center justify-center w-8 h-8">
