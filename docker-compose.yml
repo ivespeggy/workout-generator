@@ -1,0 +1,27 @@
+
+version: '3'
+services:
+  frontend:
+    build: ./frontend-nextjs
+    image: node:21
+    volumes:
+      - ./frontend-nextjs:/app
+    working_dir: /app
+    command: npm start
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend-flask
+    volumes:
+      - ./backend-flask:/app
+    working_dir: /app
+    command: python my_app.py
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
