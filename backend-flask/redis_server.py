@@ -1,9 +1,11 @@
 import redis
+import os
 from config import REDIS_SERVER_PORT
+redis_host = os.getenv('REDIS_HOST','localhost')
 
 class RedisServer:
     def __init__(self) -> None:
-        self.r = redis.Redis(host = 'redis', port = REDIS_SERVER_PORT, db = 0)
+        self.r = redis.Redis(host = redis_host, port = REDIS_SERVER_PORT, db = 0)
     # This function will take email and otp code as input
     # where key is email and val is otp code.
     # ttl for the otp code is 30 mins

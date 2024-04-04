@@ -35,12 +35,13 @@ const Login:React.FC<LoginProp> = ({isOpen,onClose}) => {
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) =>{
 
         event.preventDefault()
+
         if(validate_email(email)){
             setOnDisplay(true)
             try {
                 
                 setMessage("We are processing...")
-                const data = await loginRequest(email)
+                const data = await loginRequest(email.toLowerCase())
                 setTimeout(() => {
                     onClose({outboundEmail:email,purpose:'login'})              
                 }, 1500);
