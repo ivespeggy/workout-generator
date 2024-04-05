@@ -3,6 +3,7 @@ import { daysOfWeekChar } from "../ColorSquare"
 import React, { useState } from 'react'
 import musclesData from "../../MuscleData/Muscles"
 import { MuscleGroup, MuscleGroupUtils } from "../../MuscleData/Muscles"
+import { usePopUpStore } from "../../store/usePlanStore"
 export interface DetailedPlan{
     selectedDaysOfWeek: string[]
     numberOfDays: number
@@ -18,6 +19,9 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
     // if (!isOpen) return null;
     // console.log(purpose)
     // var displayPurpose:String = ""
+
+    const toggleCreateOff = usePopUpStore(state => state.toggleOff)
+
     const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
     const findWeekdayChar = (s:string)=>{
@@ -84,44 +88,45 @@ const CreatePlan: React.FC<CreatePlanProp> = ({isOpen,onClose}) =>{
   
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      // console.log("Submit button handled")
+      // // console.log("Submit button handled")
     
-      let checkFlg = true;
-      for (const [optionKey,optionValue] of Object.entries(selectedOptions)) {
-        // console.log(option)
+      // let checkFlg = true;
+      // for (const [optionKey,optionValue] of Object.entries(selectedOptions)) {
+      //   // console.log(option)
 
-        // const isToggleOn = selectedDays[dayChr]
-        if (optionValue === "" ) {
-          // alert("Please Complete your selection")
-          console.log("Incomplete selection")
-          const dayChr = optionKey.toString() as keyof typeof selectedDays
+      //   // const isToggleOn = selectedDays[dayChr]
+      //   if (optionValue === "" ) {
+      //     // alert("Please Complete your selection")
+      //     console.log("Incomplete selection")
+      //     const dayChr = optionKey.toString() as keyof typeof selectedDays
 
-          console.log("dayChr Select is "+ selectedDays[dayChr])
-          if(!selectedDays[dayChr]){
-            checkFlg = true
-          }
-          else{
-            checkFlg = false
-            alert("You have incomplete selections")
-          }
-          break
-          // return
-        }
-      }
+      //     console.log("dayChr Select is "+ selectedDays[dayChr])
+      //     if(!selectedDays[dayChr]){
+      //       checkFlg = true
+      //     }
+      //     else{
+      //       checkFlg = false
+      //       alert("You have incomplete selections")
+      //     }
+      //     break
+      //     // return
+      //   }
+      // }
       
     
-      if (checkFlg) {
-        console.log("Window Closed!")
-        console.log(selectedDays)
-        console.log(selectedOptions)
+      // if (checkFlg) {
+      //   console.log("Window Closed!")
+      //   console.log(selectedDays)
+      //   console.log(selectedOptions)
 
-        onClose()
-      }
+      //   onClose()
+      // }
     }    
 
 
     const handleOnClose = ()=> {
-      onClose(hardcodedPlan)
+      toggleCreateOff()
+      onClose()
     }
     const handleSelectOnChange = (isSelected: boolean, d:daysOfWeekChar) =>{
       // console.log(`New Selected State: ${isSelected} d is ${d}`)
