@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import ColorSquare from '../ColorSquare';
-import { daysOfWeekChar } from "../ColorSquare"
 
 interface PopupWindowCreatePlanProp{
     isOpen: boolean;
@@ -13,22 +12,16 @@ interface PopupWindowCreatePlanProp{
 
 
 const PopupWindowCreatePlan:React.FC<PopupWindowCreatePlanProp> = ({isOpen,onClose}) => {
-    const weekInitials = ['M','T','W','R','F','S','U']
-
-
     return (
-        <div className="create-plan-wrapper">
-                    <ColorSquare d={'d'}></ColorSquare>
-                    <ColorSquare d={'g'}></ColorSquare>
-                    <ColorSquare d={'x'}></ColorSquare>
-                    <ColorSquare d={'z'}></ColorSquare>
+        <div className="create-plan-wrapper flex items-center space-x-4 mt-5">
+                    <ColorSquare d={'M'}></ColorSquare>
+                    <ColorSquare d={'T'}></ColorSquare>
+                    <ColorSquare d={'W'}></ColorSquare>
+                    <ColorSquare d={'R'}></ColorSquare>
+                    <ColorSquare d={'F'}></ColorSquare>
+                    <ColorSquare d={'S'}></ColorSquare>
+                    <ColorSquare d={'U'}></ColorSquare>
 
-            {/* {
-                weekInitials.map((val, index) =>(
-                    // <p key={index}>{val}</p>
-                    <ColorSquare d={val}></ColorSquare>
-                ))
-            } */}
 
         </div>
     )
