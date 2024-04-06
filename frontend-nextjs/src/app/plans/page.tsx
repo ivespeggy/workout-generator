@@ -1,11 +1,16 @@
 'use client'
 import { MuscleGroup, MuscleGroupUtils } from "../MuscleData/Muscles"
-import CreatePlan from "../compoents/PlansComponents/CreatePlans"
 import { useEffect, useState } from "react"
-import { CreatePlanProp, DetailedPlan } from "../compoents/PlansComponents/CreatePlans"
 import { usePopUpStore } from "../store/usePlanStore"
 import PopupWindowCreatePlan from "../compoents/PlansComponents/PopupWindowCreatePlan"
 import jsPreviewPdf from "@js-preview/pdf";
+
+interface DetailedPlan{
+    selectedDaysOfWeek: string[]
+    numberOfDays: number
+    selectedMuscleIndex: number
+    selectedMoveIndex: number[]
+}
 const Plans = ()=>{
     const daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     const [isPopupOpen, setPopupOpen] = useState(false);
