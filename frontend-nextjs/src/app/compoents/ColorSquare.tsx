@@ -8,19 +8,19 @@ interface ColorSquareProp{
 }
 const ColorSquare:React.FC<ColorSquareProp> = ({d})=>{
     const toggleDay = useDaysInWeekStore(state => state.toggleDay)
-    const everyday = useDaysInWeekStore(state => state.everyday)
+    const everyday = useDaysInWeekStore(state => state.daysOfWeek[d])
 
     const handleClickAction = () =>{
         // console.log("D is "+d)
         // setSelected()
         toggleDay(d)
-        console.log("Everyday is "+everyday(d))
+        console.log("Everyday is "+everyday)
     }
 
     return (
         <div>
         {d}
-        {everyday(d)?
+        {everyday?
                 <div className="w-4 h-4 bg-green-500" onClick={handleClickAction}>
                 </div>
                 :

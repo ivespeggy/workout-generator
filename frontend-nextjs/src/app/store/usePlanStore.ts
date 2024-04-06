@@ -13,7 +13,6 @@ type CreatePlanPopUpStore = {
 type DaysInWeekStore = {
     daysOfWeek: {[key:string]:boolean},
     toggleDay:(initial:string) => void
-    everyday: (initial:string) => boolean
 }
 
 export const useDaysInWeekStore = create<DaysInWeekStore>() ((set,get)=>({
@@ -25,13 +24,9 @@ export const useDaysInWeekStore = create<DaysInWeekStore>() ((set,get)=>({
             ...state.daysOfWeek,
             [initial]:!currState,
         }
-        console.log(newDaysOfWeek)
+        console.log(`toggleDay:`, newDaysOfWeek)
         return {daysOfWeek:newDaysOfWeek}
     }),
-    everyday: (initial: string)=>{
-        const state = get()
-        return state.daysOfWeek[initial]
-    }
 }))
 
 
