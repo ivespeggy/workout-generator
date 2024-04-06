@@ -1,34 +1,26 @@
 'use client'
 import React from 'react';
 import { useState } from 'react';
-export enum daysOfWeekChar{
-    M = "M",
-    T = "T",
-    W = "W",
-    R = "R",
-    F = "F",
-    S = "S",
-    U = "U",
-    D = "Default"
-}
-interface ColorSquareProp{
-    d: daysOfWeekChar
-    selectOnChange?: (isSelected: boolean,d:daysOfWeekChar)=> void
-    
-}
-const ColorSquare:React.FC<ColorSquareProp> = ({d,selectOnChange})=>{
-    const [isSelected, setSelected] = useState(true)
+import { usePixelSquareStore,useDaysInWeekStore } from '../store/usePlanStore';
 
-    const handleClickAction = ()=>{
-        const newSelectState = !isSelected
-        setSelected(newSelectState)
-        selectOnChange?.(newSelectState,d)
+interface ColorSquareProp{
+    d: string    
+}
+const ColorSquare:React.FC<ColorSquareProp> = ({d})=>{
+    const toggleDay = useDaysInWeekStore(state => state.toggleDay)
+    const everyday = useDaysInWeekStore(state => state.everyday)
+
+    const handleClickAction = () =>{
+        // console.log("D is "+d)
+        // setSelected()
+        toggleDay(d)
+        console.log("Everyday is "+everyday(d))
     }
 
     return (
         <div>
         {d}
-        {isSelected?
+        {everyday(d)?
                 <div className="w-4 h-4 bg-green-500" onClick={handleClickAction}>
                 </div>
                 :
