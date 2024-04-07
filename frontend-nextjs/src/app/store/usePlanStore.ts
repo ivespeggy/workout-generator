@@ -15,6 +15,7 @@ type DaysInWeekStore = {
     toggleDay:(initial:string) => void
 }
 
+
 export const useDaysInWeekStore = create<DaysInWeekStore>() ((set,get)=>({
     daysOfWeek:{'M':true,'T':true,'W':true,'R':true,'F':true,'S':true,'U':true},
 

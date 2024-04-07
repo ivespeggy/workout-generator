@@ -26,7 +26,7 @@ const ColorSquare:React.FC<ColorSquareProp> = ({d})=>{
                 :
                 <div className="w-4 h-4 bg-red-500" onClick={handleClickAction}>
                 </div>
-
+        
                 
             
         }
