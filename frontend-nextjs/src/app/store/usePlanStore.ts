@@ -17,16 +17,6 @@ type DaysInWeekStore = {
 }
 
 
-
-type SelectorStore = {
-    selectedOption: string,
-    updateSelectedOption:(s:string) => void
-}
-export const useSelectorStore = create<SelectorStore>() ((set)=>({
-    selectedOption:'',
-    updateSelectedOption: (inputS:string) => set({selectedOption:inputS})
-}))
-
 type MuslceGroupStore = {
     updateDayOnSelectMuscle:(dayInitial:string,muscleName:string) => void,
     deleteCurrMuscleOnSelect:(dayInitial:string, muscleName:string) => void,
@@ -34,23 +24,6 @@ type MuslceGroupStore = {
     muscles: {[key: string]:boolean},
     toggleMuscle:(muscleName:string) => void
 }
-// type OnSelectOption = {
-//     selectorMuscles:{[key:string]:string},
-//     setMusscle: (id:string, m:string) =>void
-
-// }
-// export const useOnSelectMuscleOption = create<OnSelectOption>() ((set)=>({
-//     selectorMuscles:{'M':'','T':'', 'W':'', 'R':'','F':'','S':'','U':''},
-//     setMusscle: (id:string,m:string) => set((state) =>{
-//         const newSelectorMuscles = {
-//             ...state.selectorMuscles,
-//             [id]:m
-//         }
-//         console.log("正在更新 selectorMuscles:", newSelectorMuscles);
-//         return {selectorMuscles:newSelectorMuscles}
-//     })
-// }))
-
 export const useMuscleGroupStore = create<MuslceGroupStore>() ((set)=>({
     deleteCurrMuscleOnSelect: (dayInitial:string, muscleName:string) => set((state) =>{
         const newDayOfOnSelectMuscle = {
