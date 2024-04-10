@@ -171,7 +171,21 @@ export class MuscleGroupUtils{
     }
     return result
   }
+  // daysOfWeek: {[key:string]:boolean},
 
+  //WRITE COMMENTS HERE!
+
+  static getAllMoveName(): {[key:string]:boolean}{
+    var res: {[key:string]:boolean} = {}
+    Object.entries(musclesData).forEach(([key, value]) =>{
+      // console.log("K is "+key,"Value is "+value)
+      const k = parseInt(key,10)
+      const muscleGroup = musclesData[k]
+      res[muscleGroup.name_en] = false
+    })
+    // console.log(res)
+    return res
+  }
   static generateRandomMuscleMove(number: number): MuscleGroup[]{
     var res: MuscleGroup[] = []
     let muscleObjectKey = Object.keys(musclesData).map(k => Number(k))
@@ -191,12 +205,13 @@ export class MuscleGroupUtils{
       const key = parseInt(k,10)
       const muscleGroup = musclesData[key]
       res.push(muscleGroup.name_en)
-      // console.log(`English: ${muscleGroup.name_en}, Chinese: ${muscleGroup.name_cn}`);
+      console.log(`English: ${muscleGroup.name_en}, Chinese: ${muscleGroup.name_cn}`);
     })
     return res
 
   }
 }
-
+// let res = MuscleGroupUtils.getAllMoveName()
+// console.log(res['Calves'])
 
 export default musclesData
