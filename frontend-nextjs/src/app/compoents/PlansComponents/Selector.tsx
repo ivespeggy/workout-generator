@@ -2,7 +2,7 @@
 import { MuscleGroupUtils } from "../../MuscleData/Muscles"
 import { useEffect } from "react"
 import { useDaysInWeekStore, useMuscleGroupStore } from "../../store/usePlanStore"
-const Selector = ()=>{
+const Selector = () =>{
     const daysOfWeek = useDaysInWeekStore(state => state.daysOfWeek)
 
 
@@ -13,6 +13,34 @@ const Selector = ()=>{
     const updateDayOnSelectItem = useMuscleGroupStore(state => state.updateDayOnSelectMuscle)
     const deleteDayOnSelectItem = useMuscleGroupStore(state => state.deleteCurrMuscleOnSelect)
 
+/**
+ * Converts the initial of a day to its full name.
+ * 
+ * @param initial - The initial of the day as a string. For example, "M" for Monday.
+ * @returns The full name of the day as a string. Returns "Unknown" if the initial does not match any known day, which is unlikely to happen.
+ */
+
+    const convertInitialToDay = (initial:string):string=>{
+        switch (initial){
+            case "M":
+                return "Monday"
+            case "T":
+                return "Tuesday"
+            case "W":
+                return "Wednesday"
+            case "R":
+                return "Thursday"
+            case "F":
+                return "Friday"
+            case "S":
+                return "Saturday"
+            case "U":
+                return "Sunday"
+            default:
+                return "ERROR"
+        }
+        
+    }
     const handleOnSelect = (weekId:string, event:React.ChangeEvent<HTMLSelectElement>) =>{
         const selectedMuscle = event.target.value
 
@@ -57,7 +85,7 @@ const Selector = ()=>{
         {Object.entries(daysOfWeek).map(([key, v]) => (
             v === true?(
                 <div key={key}>
-                Keys: {key}, Value: {v.toString()}
+                {convertInitialToDay(key)}
                 <div>
                     <select name="workout-selection" value={dayOnSelectMuscle[key]} onChange={(event) => handleOnSelect(key, event)}>
                     <option value="default">--Please choose an option--</option>
