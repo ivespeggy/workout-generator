@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import ColorSquare from '../ColorSquare';
 import Selector from './Selector';
+import SubmitButton from './SubmitButton';
 interface PopupWindowCreatePlanProp{
     isOpen: boolean;
     onClose: ()=> void;
 }
 
 
-// const Register:React.FC<RegisterProp> = ({isOpen,onClose})  => {
 
 
 const PopupWindowCreatePlan:React.FC<PopupWindowCreatePlanProp> = ({isOpen,onClose}) => {
@@ -28,6 +28,9 @@ const PopupWindowCreatePlan:React.FC<PopupWindowCreatePlanProp> = ({isOpen,onClo
 
                 <Selector/>
 
+            </div>
+            <div>
+                <SubmitButton isOpen={isOpen} onClose={onClose}/>
             </div>
 
         </div>

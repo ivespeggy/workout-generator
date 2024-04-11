@@ -1,9 +1,10 @@
 'use client'
 import { MuscleGroup, MuscleGroupUtils } from "../MuscleData/Muscles"
 import { useEffect, useState } from "react"
-import { usePopUpStore } from "../store/usePlanStore"
+import { useDaysInWeekStore, useMuscleGroupStore, usePopUpStore } from "../store/usePlanStore"
 import PopupWindowCreatePlan from "../compoents/PlansComponents/PopupWindowCreatePlan"
 import jsPreviewPdf from "@js-preview/pdf";
+import { pdfRequest } from "../service/requestPdf"
 
 interface DetailedPlan{
     selectedDaysOfWeek: string[]
@@ -20,6 +21,9 @@ const Plans = ()=>{
     const onCreate = usePopUpStore(state => state.OnSelectStatus)
     const toggleCreate = usePopUpStore(state => state.toggleOn)
     const toggleCreateOff = usePopUpStore(state => state.toggleOff)
+    const daysOfWeekAttr = useDaysInWeekStore(state => state.daysOfWeek)
+    const dayOnSelectMuscle = useMuscleGroupStore(state => state.dayOnSelectMuscle)
+
 
     useEffect(()=>{
         const muscles = MuscleGroupUtils.generateRandomMuscleMove(7)
@@ -36,44 +40,14 @@ const Plans = ()=>{
         console.log("X pressed")
     }
     
-    const handleClose = (plan?: DetailedPlan)=>{
+    const handleClose = async ()=>{
         console.log("1111")
         // setDetailedPlan(plan !== undefined ? plan : null)
-        console.log(detailedPlan)
-        
+        toggleCreateOff()
         console.log("22")
-
+        await pdfRequest(daysOfWeekAttr,dayOnSelectMuscle)
 
     }
-    const fetchData = async () => {
-        const response = await fetch('http://127.0.0.1:5000/generate_pdf', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-          }),
-        })
-      
-        if (response.ok) {
-            const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a')
-            link.href = downloadUrl;
-            link.setAttribute('download', 'file.pdf')
-            document.body.appendChild(link);
-            link.click()
-            if(link.parentNode){
-                link.parentNode.removeChild(link)
-            }
-          } else {
-            console.error('Server responded with ', response.status)
-          }
-      }
-
-      
-
-
     return(
         <>
         <h1 className="text-xl mb-4"><strong>Example Work Plans</strong></h1>
@@ -97,11 +71,11 @@ const Plans = ()=>{
         }>
             Create Your Plan
           </button>
-          <button onClick={fetchData}>Download PDF</button>
+          <button onClick={()=>{pdfRequest(daysOfWeekAttr,dayOnSelectMuscle)}}>Download PDF</button>
           {onCreate && 
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50" style={{ zIndex: 10000 }}>
                     <div className="relative bg-white p-4 rounded" style={{ minWidth: "300px" }}>
-                        <PopupWindowCreatePlan isOpen={isPopupOpen} onClose={handleClose} />
+                        <PopupWindowCreatePlan isOpen={onCreate} onClose={handleClose} />
                         <button onClick={()=> handleClickActionX()} className="absolute top-0 right-0 m-2 border rounded-full bg-red-500 text-white text-lg flex items-center justify-center w-8 h-8">
                             &times;
                         </button>
