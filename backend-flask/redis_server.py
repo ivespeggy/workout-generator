@@ -1,6 +1,7 @@
 import redis
 import os
 from config import REDIS_SERVER_PORT
+import jwt
 redis_host = os.getenv('REDIS_HOST','localhost')
 
 class RedisServer:
@@ -36,7 +37,59 @@ class RedisServer:
             res['message'] = "User Not Found"
             res['response_status_code'] = 404
         return res
+    
+    def retrieve_jwt(self, user_email:str) -> dict:
+        key = f'jwt:email:{user_email}'
+        res = {}
+        jwt_token = self.r.get(key)
+        if jwt_token:
+            res['status'] = True
+            res['message'] = 'Token found'
+            res['response_status_code'] = 302
+        else:
+            res['status'] = False
+            res['message'] = 'Token Not Found'
+            res['response_status_code'] = 404
+        return res
             
+
+
+
+    def generate_jwt(self,user_email:str) -> dict:
+        # firstly to check if user exist in the db
+        check_if_exist = self.retrieve_user_info(user_email=user_email)
+        res = {}
+        if check_if_exist['status']:
+            key = f'jwt:email:{user_email}'
+            encoded_jwt = jwt.encode({"email":user_email }, "secret", algorithm="HS256")
+            print("User found")
+            #firstly to check if we have jwt token associated with this email.abs
+            token_exist = self.r.get(key)
+            if not token_exist:
+                # if not exist, create jwt token.
+                encoded_jwt = jwt.encode({"email":user_email }, "secret", algorithm="HS256")
+                #
+                key = f'jwt:email:{user_email}'
+                # ttl is 7 days
+                self.r.psetex(key, 7 * 24 * 60 * 60 * 100, encoded_jwt)
+                res['status'] = True
+                res['message'] = 'Token generated, and logged in'
+                res['response_status_code'] = 201
+                res['token'] = encoded_jwt
+            if token_exist:
+                res['status'] = True
+                res['message'] = f'Token existed, ttl is {self.r.ttl(key)} seconds'
+                res['response_status_code'] = 200
+                res['token'] = encoded_jwt
+
+
+        else:
+            print("User NOT found")
+            res['status'] = False
+            res['message'] = 'Not Found'
+            res['response_status_code'] = 404
+            print("2")
+        return res
 
 
 

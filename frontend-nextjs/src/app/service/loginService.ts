@@ -11,6 +11,7 @@ export const loginRequest =  async (email: string) => {
     if (response.ok){
       const data = await response.json()
       console.log(data)
+      localStorage.setItem('jwtToken', data.token);
       return data
     }
     else{

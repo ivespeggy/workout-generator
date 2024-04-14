@@ -26,12 +26,21 @@ def login():
     if data is None:
          return jsonify({'error': sender_email}), 400
     email = data.get('email', 'default_email')
-    res = redis_server.retrieve_user_info(email)
-    redis_server.list_all_user(top_number=100)
-    if res['status']:
-        return jsonify({'message': res['message']}), res['response_status_code']
+    # redis_server.list_all_user(top_number=100)
+    jwt_token_res = redis_server.generate_jwt(email)
+    if jwt_token_res['response_status_code'] == 404:
+        return jsonify({'message': jwt_token_res['message']}), jwt_token_res['response_status_code']
     else:
-        return jsonify({'message': res['message']}), res['response_status_code']
+        return jsonify({'message': jwt_token_res['message'], 'token':jwt_token_res['token']}), jwt_token_res['response_status_code']
+
+    # # if not jwt_token:
+    # #     redis_server.generate_jwt(email)
+    # # else:
+    # #     print(jwt_token)
+    # if res['status']:
+    #     return jsonify({'message': res['message']}), res['response_status_code']
+    # else:
+    #     return jsonify({'message': res['message']}), res['response_status_code']
 
 @app.route('/register',methods=['POST'])
 def register():
