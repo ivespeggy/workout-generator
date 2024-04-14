@@ -41,9 +41,8 @@ const Login:React.FC<LoginProp> = ({isOpen,onClose}) => {
             try {
                 
                 setMessage("We are processing...")
-                const data = await loginRequest(email.toLowerCase())
                 setTimeout(() => {
-                    onClose({outboundEmail:email,purpose:'login'})              
+                    onClose({outboundEmail:email.toLowerCase(),purpose:'login'})              
                 }, 1500);
 
 

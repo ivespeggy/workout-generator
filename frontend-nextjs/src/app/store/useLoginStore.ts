@@ -1,5 +1,6 @@
 
 import { create } from "zustand";
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 type LoginEmailStore = {
     email: string
@@ -14,6 +15,8 @@ type RegisterMsgDisplayStatus = {
     setStatus: (bool: boolean) =>void
 }
 
+
+
 type SharedLoginEmailInfoStore = {
     email: string
     purpose: 'signup' | 'login' | 'initialization'
@@ -21,13 +24,22 @@ type SharedLoginEmailInfoStore = {
     setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => void
 }
 
-export const useSharedLoginEmailInfoStore = create<SharedLoginEmailInfoStore>() ((set) =>({
-    email: '',
-    purpose:'initialization',
-    setEmail: (inputEmail: string) => set({email:inputEmail}),
-    setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => set({purpose:inputPurpose})
 
-}))
+export const useSharedLoginEmailInfoStore = create<SharedLoginEmailInfoStore>() (
+    persist(
+        (set) =>({
+            email: '',
+            purpose:'initialization',
+            setEmail: (inputEmail: string) => set({email:inputEmail}),
+            setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => set({purpose:inputPurpose})}),
+
+            {
+                name: 'purpose-state',
+                storage: createJSONStorage(() => sessionStorage),
+              },
+    ))
+
+
 
 export const useRegisterMsgDisplayStatusStore = create<RegisterMsgDisplayStatus>() ((set) =>({
     status: false,
