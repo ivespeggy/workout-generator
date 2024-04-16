@@ -31,12 +31,12 @@ export const SwiperComponent = ()=>{
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        <SwiperSlide>The hardest thing to do is Show Up</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide className="bg-amber-200">The hardest thing to do is Show Up</SwiperSlide>
+        <SwiperSlide className="bg-emerald-200">Slide 2</SwiperSlide>
+        <SwiperSlide className="bg-teal-400">Slide 3</SwiperSlide>
+        <SwiperSlide className="bg-sky-700">Slide 4</SwiperSlide>
+        <SwiperSlide className="bg-fuchsia-300">Slide 5</SwiperSlide>
+        <SwiperSlide className="bg-rose-400">Slide 6</SwiperSlide>
       </Swiper>
     )
 }

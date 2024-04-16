@@ -71,7 +71,6 @@ const Plans = ()=>{
         }>
             Create Your Plan
           </button>
-          <button onClick={()=>{pdfRequest(daysOfWeekAttr,dayOnSelectMuscle)}}>Download PDF</button>
           {onCreate && 
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50" style={{ zIndex: 10000 }}>
                     <div className="relative bg-white p-4 rounded" style={{ minWidth: "300px" }}>
