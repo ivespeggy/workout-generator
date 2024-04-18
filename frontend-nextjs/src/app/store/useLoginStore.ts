@@ -21,7 +21,8 @@ type SharedLoginEmailInfoStore = {
     email: string
     purpose: 'signup' | 'login' | 'initialization'
     setEmail: (inputEmail: string) => void
-    setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => void
+    setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => void,
+    logout: () =>void
 }
 
 
@@ -31,8 +32,14 @@ export const useSharedLoginEmailInfoStore = create<SharedLoginEmailInfoStore>() 
             email: '',
             purpose:'initialization',
             setEmail: (inputEmail: string) => set({email:inputEmail}),
-            setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => set({purpose:inputPurpose})}),
+            setPurpose: (inputPurpose: 'signup' | 'login' | 'initialization') => set({purpose:inputPurpose}),
+            logout: ()=> set({
+                email:'',
+                purpose:'initialization',
+            })
 
+        }),
+            
             {
                 name: 'purpose-state',
                 storage: createJSONStorage(() => sessionStorage),

@@ -28,10 +28,11 @@ def login():
     email = data.get('email', 'default_email')
     # redis_server.list_all_user(top_number=100)
     jwt_token_res = redis_server.generate_jwt(email)
+
     if jwt_token_res['response_status_code'] == 404:
         return jsonify({'message': jwt_token_res['message']}), jwt_token_res['response_status_code']
     else:
-        return jsonify({'message': jwt_token_res['message'], 'token':jwt_token_res['token']}), jwt_token_res['response_status_code']
+        return jsonify({'message': jwt_token_res['message'],'expiry_date':jwt_token_res['expiry_date'], 'token':jwt_token_res['token']}), jwt_token_res['response_status_code']
 
     # # if not jwt_token:
     # #     redis_server.generate_jwt(email)

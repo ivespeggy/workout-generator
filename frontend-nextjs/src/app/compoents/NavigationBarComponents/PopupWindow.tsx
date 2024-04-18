@@ -1,7 +1,7 @@
 import react from 'react'
 import Register from './Register';
 import Login from './Login';
-import { useSharedLoginEmailInfoStore } from '../../store/useLoginStore';
+import { useRegisterMsgDisplayStatusStore, useSharedLoginEmailInfoStore } from '../../store/useLoginStore';
 interface PopupWindowProp{
     isOpen: boolean;
     onClose: (data:{email?:string, purpose: 'signup' | 'login' | 'initialization'})=> void;
@@ -17,6 +17,9 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
     const setOutboundEmail = useSharedLoginEmailInfoStore(state => state.setEmail)
     const setOutboundPurpose = useSharedLoginEmailInfoStore(state =>state.setPurpose)
 
+    const setOnDisplay = useRegisterMsgDisplayStatusStore(state => state.setStatus)
+
+
 
     const handleOnClose = (data:{email?:string, purpose: 'signup' | 'login' | 'initialization'}) =>{
         console.log("On Handle Close revoked IN popup")
@@ -29,6 +32,7 @@ const PopupWindow: React.FC<PopupWindowProp> = ({isOpen,onClose,purpose}) =>{
                 setOutboundPurpose(data.purpose)
             }
             onClose(data)
+            setOnDisplay(false)
 
     
         }

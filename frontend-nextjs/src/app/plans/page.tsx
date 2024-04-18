@@ -21,8 +21,12 @@ const Plans = ()=>{
     const onCreate = usePopUpStore(state => state.OnSelectStatus)
     const toggleCreate = usePopUpStore(state => state.toggleOn)
     const toggleCreateOff = usePopUpStore(state => state.toggleOff)
+
     const daysOfWeekAttr = useDaysInWeekStore(state => state.daysOfWeek)
     const dayOnSelectMuscle = useMuscleGroupStore(state => state.dayOnSelectMuscle)
+
+    const resetDaysOfWeekAttr = useDaysInWeekStore(state => state.reset)
+    const resetDayOnSelectMuscle = useMuscleGroupStore(state => state.reset)
 
 
     useEffect(()=>{
@@ -37,7 +41,10 @@ const Plans = ()=>{
     }
     const handleClickActionX = () =>{
         toggleCreateOff()
+        resetDaysOfWeekAttr()
+        resetDayOnSelectMuscle()
         console.log("X pressed")
+
     }
     
     const handleClose = async ()=>{

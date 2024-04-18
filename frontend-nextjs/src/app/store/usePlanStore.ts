@@ -14,6 +14,7 @@ type CreatePlanPopUpStore = {
 type DaysInWeekStore = {
     daysOfWeek: {[key:string]:boolean},
     toggleDay:(initial:string) => void
+    reset: () => void
 }
 
 
@@ -22,9 +23,17 @@ type MuslceGroupStore = {
     deleteCurrMuscleOnSelect:(dayInitial:string, muscleName:string) => void,
     dayOnSelectMuscle: {[key:string]:string},
     muscles: {[key: string]:boolean},
-    toggleMuscle:(muscleName:string) => void
+    toggleMuscle:(muscleName:string) => void,
+    reset:()=>void
 }
 export const useMuscleGroupStore = create<MuslceGroupStore>() ((set)=>({
+    reset:() =>set((state) =>{
+        const newDayOfOnSelectMuscle:{[key:string]:string} = {}
+        for (const key in state.dayOnSelectMuscle){
+            newDayOfOnSelectMuscle[key] = ''
+        }
+        return {dayOnSelectMuscle:newDayOfOnSelectMuscle}
+    }),
     deleteCurrMuscleOnSelect: (dayInitial:string, muscleName:string) => set((state) =>{
         const newDayOfOnSelectMuscle = {
             ...state.dayOnSelectMuscle,
@@ -64,6 +73,13 @@ export const useDaysInWeekStore = create<DaysInWeekStore>() ((set,get)=>({
         console.log(`toggleDay:`, newDaysOfWeek)
         return {daysOfWeek:newDaysOfWeek}
     }),
+    reset:()=> set((state) =>{
+        const newDaysOfWeek:{[key:string]:boolean} = {}
+        for (const key in state.daysOfWeek){
+            newDaysOfWeek[key] = true
+        }
+        return {daysOfWeek:newDaysOfWeek}
+    })
 }))
 
 
